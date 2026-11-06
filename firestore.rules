@@ -1,0 +1,30 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Website CMS Configuration (General brand, Hero, Pricing, Services, About, Ordering)
+    match /config/cms {
+      allow read, write: if true;
+    }
+
+    // Customer Orders Collection (Public ordering checkout & Admin management)
+    match /orders/{orderId} {
+      allow read, write: if true;
+    }
+
+    // Visitor Contact Inquiries Collection
+    match /messages/{messageId} {
+      allow read, write: if true;
+    }
+
+    // System Connection Health Check & Ping
+    match /_system_ping/{docId} {
+      allow read, write: if true;
+    }
+
+    // Default match for other collections during development
+    match /{document=**} {
+      allow read, write: if true;
+    }
+  }
+}

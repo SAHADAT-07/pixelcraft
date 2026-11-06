@@ -1,0 +1,1695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pixel Craft — Admin Control Panel</title>
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            navy: {
+              900: '#0b132b',
+              800: '#111c3e',
+              700: '#1c2951'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    .tab-btn.active {
+      background-color: #2563eb;
+      color: #ffffff;
+      font-weight: 600;
+    }
+    .tab-btn.active i {
+      color: #ffffff;
+    }
+    .device-btn.active {
+      background-color: #2563eb;
+      color: #ffffff;
+      border-color: #2563eb;
+    }
+  </style>
+</head>
+<body class="bg-slate-100 text-slate-800 antialiased min-h-screen">
+
+  <!-- ==================== 1. LOGIN SCREEN ==================== -->
+  <div id="login-container" class="min-h-screen bg-[#0b132b] flex items-center justify-center p-4">
+    <div class="max-w-md w-full bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl p-8 relative overflow-hidden">
+      <!-- Glow ambient -->
+      <div class="absolute -top-24 -left-24 w-48 h-48 bg-blue-600/20 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="text-center mb-8 relative">
+        <div class="w-14 h-14 mx-auto mb-4 bg-blue-600/20 border border-blue-500/30 rounded-2xl flex items-center justify-center text-blue-400 text-2xl shadow-inner">
+          <i class="fa-solid fa-sliders"></i>
+        </div>
+        <h1 class="text-2xl font-bold text-white tracking-tight">Admin Control Panel</h1>
+        <p class="text-slate-400 text-sm mt-1">Manage website content, pricing, orders &amp; live preview</p>
+      </div>
+
+      <!-- Login Form -->
+      <form id="login-form" onsubmit="handleLogin(event)" class="space-y-5 relative">
+        <div id="login-error" class="hidden bg-red-500/10 border border-red-500/30 text-red-400 text-xs px-3.5 py-2.5 rounded-lg flex items-center gap-2">
+          <i class="fa-solid fa-circle-exclamation"></i>
+          <span id="login-error-text">Invalid username or password</span>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">Username</label>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
+              <i class="fa-solid fa-user text-sm"></i>
+            </span>
+            <input 
+              type="text" 
+              id="login-username" 
+              required 
+              placeholder="admin" 
+              class="w-full bg-slate-800/80 border border-slate-700 rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">Password</label>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
+              <i class="fa-solid fa-lock text-sm"></i>
+            </span>
+            <input 
+              type="password" 
+              id="login-password" 
+              required 
+              placeholder="••••••••" 
+              class="w-full bg-slate-800/80 border border-slate-700 rounded-xl pl-10 pr-10 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+            />
+            <button 
+              type="button" 
+              onclick="togglePasswordVisibility('login-password')" 
+              class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-500 hover:text-slate-300"
+            >
+              <i class="fa-regular fa-eye text-sm"></i>
+            </button>
+          </div>
+        </div>
+
+        <button 
+          type="submit" 
+          class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-xl shadow-lg shadow-blue-600/30 transition active:scale-95 duration-150 flex items-center justify-center gap-2"
+        >
+          <span>Sign In to Dashboard</span>
+          <i class="fa-solid fa-arrow-right text-xs"></i>
+        </button>
+
+        <!-- Quick Demo Fill -->
+        <div class="pt-4 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+          <span>Demo credentials: <strong class="text-slate-300">admin / admin123</strong></span>
+          <button 
+            type="button" 
+            onclick="fillDemoCreds()" 
+            class="text-blue-400 hover:text-blue-300 font-medium underline"
+          >
+            Auto-fill
+          </button>
+        </div>
+      </form>
+
+      <div class="mt-6 text-center">
+        <a href="index.html" class="text-xs text-slate-400 hover:text-slate-200 transition inline-flex items-center gap-1.5">
+          <i class="fa-solid fa-arrow-left text-[10px]"></i>
+          <span>Return to Public Website</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 2. ADMIN DASHBOARD ==================== -->
+  <div id="dashboard-container" class="hidden min-h-screen flex flex-col">
+
+    <!-- Top Navigation Header -->
+    <header class="bg-[#0b132b] text-white border-b border-slate-800 sticky top-0 z-40">
+      <div class="px-4 sm:px-6 py-3 flex items-center justify-between">
+        
+        <!-- Left: Brand & Mobile Menu Toggle -->
+        <div class="flex items-center gap-3 sm:gap-4">
+          <button id="mobile-sidebar-toggle" onclick="toggleMobileSidebar()" class="lg:hidden text-slate-400 hover:text-white p-2">
+            <i class="fa-solid fa-bars text-lg"></i>
+          </button>
+          <div class="flex items-center gap-2.5">
+            <div class="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white font-bold shadow-md">
+              <i class="fa-solid fa-sliders text-sm"></i>
+            </div>
+            <div>
+              <span id="header-brand-title" class="font-bold text-white text-base tracking-tight">Pixel Craft</span>
+              <span class="ml-2 text-[10px] font-semibold uppercase tracking-wider bg-blue-500/20 text-blue-300 px-2 py-0.5 rounded-full border border-blue-400/30">CMS v2.2</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Actions (Live Preview, View Site, Save, Logout) -->
+        <div class="flex items-center gap-2 sm:gap-3">
+          
+          <!-- Cloud Database Status Pill -->
+          <button 
+            id="header-cloud-btn" 
+            onclick="switchTab('firebase')" 
+            class="hidden sm:inline-flex items-center gap-1.5 bg-slate-800/90 hover:bg-slate-700 text-slate-300 text-xs font-semibold px-3 py-2 rounded-lg border border-slate-700 transition"
+            title="Firebase Cloud Database Status"
+          >
+            <span id="header-cloud-dot" class="w-2 h-2 rounded-full bg-amber-400"></span>
+            <i class="fa-solid fa-cloud text-amber-400 text-xs" id="header-cloud-icon"></i>
+            <span id="header-cloud-text">Local Mode</span>
+          </button>
+
+          <!-- Live Preview / Split View Toggle Button -->
+          <button 
+            id="toggle-split-btn"
+            onclick="toggleSplitView()" 
+            class="inline-flex items-center gap-1.5 sm:gap-2 bg-slate-800/90 hover:bg-slate-700 text-slate-200 text-xs sm:text-sm font-semibold px-3 py-2 rounded-lg border border-slate-700 transition"
+            title="Toggle Split-Screen Live Preview"
+          >
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <i class="fa-solid fa-table-columns text-emerald-400 text-xs"></i>
+            <span id="split-btn-label" class="hidden sm:inline">Split Preview</span>
+          </button>
+
+          <!-- View Site Button -->
+          <a 
+            href="index.html" 
+            target="_blank" 
+            class="hidden md:inline-flex items-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs sm:text-sm font-medium px-3 py-2 rounded-lg border border-slate-700 transition shadow-sm"
+          >
+            <i class="fa-solid fa-globe text-blue-400"></i>
+            <span>View Site</span>
+            <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-slate-400"></i>
+          </a>
+
+          <!-- Save All Changes Button -->
+          <button 
+            onclick="saveCurrentTab()" 
+            class="inline-flex items-center gap-1.5 sm:gap-2 bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm font-semibold px-3.5 sm:px-4 py-2 rounded-lg shadow-md transition active:scale-95"
+          >
+            <i class="fa-solid fa-floppy-disk text-xs"></i>
+            <span>Save</span>
+          </button>
+
+          <!-- User Pill / Logout -->
+          <button 
+            onclick="handleLogout()" 
+            title="Log Out"
+            class="p-2 text-slate-400 hover:text-red-400 hover:bg-slate-800/80 rounded-lg transition"
+          >
+            <i class="fa-solid fa-right-from-bracket text-base"></i>
+          </button>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- Main Workspace (Sidebar + Content / Split Preview) -->
+    <div class="flex-1 flex overflow-hidden">
+      
+      <!-- Left Sidebar Navigation -->
+      <aside id="admin-sidebar" class="w-64 bg-[#080d1f] text-slate-300 flex-shrink-0 border-r border-slate-800/80 flex flex-col justify-between hidden lg:flex z-30 transition-all duration-300">
+        <div class="p-4 space-y-1 overflow-y-auto custom-scrollbar">
+          
+          <div class="text-[11px] font-bold uppercase tracking-wider text-slate-500 px-3 pt-2 pb-1">
+            Website Content
+          </div>
+
+          <!-- Tabs -->
+          <button onclick="switchTab('overview')" class="tab-btn active w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium hover:bg-slate-800/60 transition text-left" data-tab="overview">
+            <i class="fa-solid fa-chart-pie w-5 text-center text-slate-400"></i>
+            <span>Dashboard</span>
+          </button>
+
+          <button onclick="switchTab('general')" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium hover:bg-slate-800/60 transition text-left" data-tab="general">
+            <i class="fa-solid fa-palette w-5 text-center text-slate-400"></i>
+            <span>Brand &amp; Logo</span>
+          </button>
+
+          <button onclick="switchTab('hero')" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium hover:bg-slate-800/60 transition text-left" data-tab="hero">
+            <i class="fa-solid fa-laptop-code w-5 text-center text-slate-400"></i>
+            <span>Hero Section</span>
+          </button>
+
+          <button onclick="switchTab('services')" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium hover:bg-slate-800/60 transition text-left" data-tab="services">
+            <i class="fa-solid fa-cubes w-5 text-center text-slate-400"></i>
+            <span>What We Do</span>
+          </button>
+
+          <button onclick="switchTab('about')" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium hover:bg-slate-800/60 transition text-left" data-tab="about">
+            <i class="fa-solid fa-users w-5 text-center text-slate-400"></i>
+            <span>About Us</span>
+          </button>
+
+          <button onclick="switchTab('pricing')" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium hover:bg-slate-800/60 transition text-left" data-tab="pricing">
+            <i class="fa-solid fa-tag w-5 text-center text-slate-400"></i>
+            <span>Pricing &amp; Plans</span>
+          </button>
+
+          <button onclick="switchTab('contact')" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium hover:bg-slate-800/60 transition text-left" data-tab="contact">
+            <i class="fa-solid fa-address-book w-5 text-center text-slate-400"></i>
+            <span>Contact &amp; Footer</span>
+          </button>
+
+          <div class="text-[11px] font-bold uppercase tracking-wider text-slate-500 px-3 pt-3 pb-1">
+            Orders &amp; Commerce
+          </div>
+
+          <!-- Ordering Settings Tab -->
+          <button onclick="switchTab('ordering')" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium hover:bg-slate-800/60 transition text-left" data-tab="ordering">
+            <i class="fa-solid fa-cart-shopping w-5 text-center text-slate-400"></i>
+            <span>Ordering Settings</span>
+          </button>
+
+          <!-- Customer Orders Tab with Badge -->
+          <button onclick="switchTab('orders')" class="tab-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium hover:bg-slate-800/60 transition text-left" data-tab="orders">
+            <div class="flex items-center gap-3">
+              <i class="fa-solid fa-bag-shopping w-5 text-center text-slate-400"></i>
+              <span>Customer Orders</span>
+            </div>
+            <span id="orders-badge" class="bg-emerald-600 text-white text-[11px] font-bold px-2 py-0.5 rounded-full">0</span>
+          </button>
+
+          <div class="text-[11px] font-bold uppercase tracking-wider text-slate-500 px-3 pt-3 pb-1">
+            Communications
+          </div>
+
+          <button onclick="switchTab('inbox')" class="tab-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium hover:bg-slate-800/60 transition text-left" data-tab="inbox">
+            <div class="flex items-center gap-3">
+              <i class="fa-solid fa-inbox w-5 text-center text-slate-400"></i>
+              <span>Inquiries Inbox</span>
+            </div>
+            <span id="unread-badge" class="bg-blue-600 text-white text-[11px] font-bold px-2 py-0.5 rounded-full">0</span>
+          </button>
+
+          <div class="text-[11px] font-bold uppercase tracking-wider text-slate-500 px-3 pt-3 pb-1">
+            Live Preview &amp; System
+          </div>
+
+          <!-- Live Preview Dedicated Tab -->
+          <button onclick="switchTab('preview')" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium hover:bg-slate-800/60 transition text-left" data-tab="preview">
+            <i class="fa-solid fa-desktop w-5 text-center text-emerald-400"></i>
+            <span>Live Website Preview</span>
+          </button>
+
+          <!-- Firebase Cloud Tab -->
+          <button onclick="switchTab('firebase')" class="tab-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium hover:bg-slate-800/60 transition text-left" data-tab="firebase">
+            <div class="flex items-center gap-3">
+              <i class="fa-solid fa-cloud w-5 text-center text-amber-400" id="sidebar-cloud-icon"></i>
+              <span>Firebase Cloud</span>
+            </div>
+            <span id="sidebar-cloud-badge" class="text-[10px] uppercase font-bold px-1.5 py-0.5 rounded bg-slate-800 text-slate-400">Local</span>
+          </button>
+
+          <button onclick="switchTab('backup')" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium hover:bg-slate-800/60 transition text-left" data-tab="backup">
+            <i class="fa-solid fa-database w-5 text-center text-slate-400"></i>
+            <span>Backup &amp; Reset</span>
+          </button>
+
+          <button onclick="switchTab('security')" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium hover:bg-slate-800/60 transition text-left" data-tab="security">
+            <i class="fa-solid fa-shield-halved w-5 text-center text-slate-400"></i>
+            <span>Admin Security</span>
+          </button>
+
+        </div>
+
+        <!-- Sidebar footer info -->
+        <div class="p-4 border-t border-slate-800/80 text-xs text-slate-500 flex items-center justify-between">
+          <span>Live Sync Active</span>
+          <span class="inline-flex items-center gap-1.5 text-emerald-400 font-medium">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            Online
+          </span>
+        </div>
+      </aside>
+
+      <!-- Main Workspace Container (Supports Split View) -->
+      <div id="split-view-container" class="flex-1 flex overflow-hidden">
+        
+        <!-- Editor Content Area (Left pane in split view) -->
+        <main id="split-editor-pane" class="flex-1 bg-slate-100 overflow-y-auto p-4 sm:p-6 lg:p-8 custom-scrollbar transition-all duration-300">
+          <div class="max-w-5xl mx-auto space-y-6">
+
+            <!-- ==================== TAB 1: OVERVIEW ==================== -->
+            <div id="tab-overview" class="tab-content space-y-6">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                  <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Dashboard Overview</h2>
+                  <p class="text-slate-500 text-sm mt-0.5">Quick status, metrics, and customer activity</p>
+                </div>
+                <div class="flex gap-2">
+                  <button onclick="switchTab('orders')" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold px-4 py-2 rounded-lg shadow-sm">
+                    <i class="fa-solid fa-bag-shopping mr-1.5"></i> Customer Orders
+                  </button>
+                  <button onclick="switchTab('pricing')" class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold px-4 py-2 rounded-lg shadow-sm">
+                    <i class="fa-solid fa-tag mr-1.5"></i> Edit Prices
+                  </button>
+                </div>
+              </div>
+
+              <!-- Stats Grid -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+                <!-- Stat 1: Customer Orders -->
+                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center gap-4 cursor-pointer hover:border-emerald-300 transition" onclick="switchTab('orders')">
+                  <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                  </div>
+                  <div>
+                    <div class="text-2xl font-bold text-slate-900" id="stat-orders-count">0</div>
+                    <div class="text-xs text-slate-500 font-medium">Customer Orders</div>
+                  </div>
+                </div>
+
+                <!-- Stat 2: Total Revenue -->
+                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center gap-4">
+                  <div class="w-12 h-12 rounded-xl bg-green-50 text-green-600 flex items-center justify-center text-xl">
+                    <i class="fa-solid fa-dollar-sign"></i>
+                  </div>
+                  <div>
+                    <div class="text-2xl font-bold text-slate-900" id="stat-revenue-total">$0</div>
+                    <div class="text-xs text-slate-500 font-medium">Order Value</div>
+                  </div>
+                </div>
+
+                <!-- Stat 3: Pricing Plans -->
+                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center gap-4 cursor-pointer hover:border-blue-300 transition" onclick="switchTab('pricing')">
+                  <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl">
+                    <i class="fa-solid fa-tag"></i>
+                  </div>
+                  <div>
+                    <div class="text-2xl font-bold text-slate-900" id="stat-plans-count">3</div>
+                    <div class="text-xs text-slate-500 font-medium">Pricing Plans</div>
+                  </div>
+                </div>
+
+                <!-- Stat 4: Active Services -->
+                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center gap-4 cursor-pointer hover:border-indigo-300 transition" onclick="switchTab('services')">
+                  <div class="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-xl">
+                    <i class="fa-solid fa-cubes"></i>
+                  </div>
+                  <div>
+                    <div class="text-2xl font-bold text-slate-900" id="stat-services-count">3</div>
+                    <div class="text-xs text-slate-500 font-medium">Active Services</div>
+                  </div>
+                </div>
+
+                <!-- Stat 5: Inquiries -->
+                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center gap-4 cursor-pointer hover:border-amber-300 transition" onclick="switchTab('inbox')">
+                  <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-xl">
+                    <i class="fa-solid fa-envelope"></i>
+                  </div>
+                  <div>
+                    <div class="text-2xl font-bold text-slate-900" id="stat-messages-count">0</div>
+                    <div class="text-xs text-slate-500 font-medium">Form Inquiries</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Recent Customer Orders Preview -->
+              <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
+                <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
+                  <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-bag-shopping text-emerald-600"></i>
+                    <h3 class="font-bold text-slate-900 text-base">Recent Customer Orders</h3>
+                  </div>
+                  <button onclick="switchTab('orders')" class="text-xs text-blue-600 font-semibold hover:underline">View All Orders</button>
+                </div>
+                <div id="overview-recent-orders" class="divide-y divide-slate-100">
+                  <!-- Dynamically populated -->
+                </div>
+              </div>
+
+              <!-- Quick Action Cards -->
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col justify-between">
+                  <div>
+                    <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center mb-4">
+                      <i class="fa-solid fa-cart-shopping"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-900 text-base">Ordering &amp; Checkout</h3>
+                    <p class="text-xs text-slate-500 mt-1">Configure the public ordering flow, confirmation messaging, WhatsApp order links, and required fields.</p>
+                  </div>
+                  <button onclick="switchTab('ordering')" class="mt-4 text-xs font-semibold text-emerald-600 hover:text-emerald-800 inline-flex items-center gap-1">
+                    Ordering Settings <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                  </button>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col justify-between">
+                  <div>
+                    <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center mb-4">
+                      <i class="fa-solid fa-palette"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-900 text-base">Brand &amp; Logo Settings</h3>
+                    <p class="text-xs text-slate-500 mt-1">Upload a custom logo image, change navbar logo height, or switch between text and graphic logo.</p>
+                  </div>
+                  <button onclick="switchTab('general')" class="mt-4 text-xs font-semibold text-blue-600 hover:text-blue-800 inline-flex items-center gap-1">
+                    Change Logo &amp; Brand <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                  </button>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col justify-between">
+                  <div>
+                    <div class="w-10 h-10 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center mb-4">
+                      <i class="fa-solid fa-desktop"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-900 text-base">Live Website Preview</h3>
+                    <p class="text-xs text-slate-500 mt-1">See your changes live in real-time across Desktop, Tablet, and Mobile viewports.</p>
+                  </div>
+                  <button onclick="toggleSplitView()" class="mt-4 text-xs font-semibold text-purple-600 hover:text-purple-800 inline-flex items-center gap-1">
+                    Open Split Preview <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Recent Inquiries Preview -->
+              <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
+                <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
+                  <h3 class="font-bold text-slate-900 text-base">Recent Inquiries</h3>
+                  <button onclick="switchTab('inbox')" class="text-xs text-blue-600 font-semibold hover:underline">View All</button>
+                </div>
+                <div id="overview-recent-messages" class="divide-y divide-slate-100">
+                  <!-- Dynamically populated -->
+                </div>
+              </div>
+            </div>
+
+            <!-- ==================== TAB 2: GENERAL & BRANDING (WITH LOGO CHANGE) ==================== -->
+            <div id="tab-general" class="tab-content hidden space-y-6">
+              <div>
+                <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Brand &amp; Logo Settings</h2>
+                <p class="text-slate-500 text-sm mt-0.5">Customize your brand identity, upload custom logo images, and adjust navbar sizing</p>
+              </div>
+
+              <!-- Brand Basics Card -->
+              <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6 space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">Website Name / Brand</label>
+                    <input type="text" id="gen-site-name" oninput="handleLiveInputChange()" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-slate-900 focus:ring-2 focus:ring-blue-500 focus:outline-none transition text-sm" placeholder="e.g. Pixel Craft" />
+                    <p class="text-[11px] text-slate-400 mt-1">Used in page headers, footer copyright, and brand references.</p>
+                  </div>
+
+                  <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">Navbar Logo Text</label>
+                    <input type="text" id="gen-logo-text" oninput="handleLiveInputChange()" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-slate-900 focus:ring-2 focus:ring-blue-500 focus:outline-none transition text-sm" placeholder="e.g. Pixel Craft" />
+                    <p class="text-[11px] text-slate-400 mt-1">Displayed when logo mode includes text.</p>
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">Browser Tab Title</label>
+                  <input type="text" id="gen-browser-title" oninput="handleLiveInputChange()" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-slate-900 focus:ring-2 focus:ring-blue-500 focus:outline-none transition text-sm" placeholder="e.g. Pixel Craft — Empowering Brands With Digital Magic" />
+                  <p class="text-[11px] text-slate-400 mt-1">Title displayed in browser tabs and search engine bookmarks.</p>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">Brand Tagline</label>
+                  <input type="text" id="gen-tagline" oninput="handleLiveInputChange()" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-slate-900 focus:ring-2 focus:ring-blue-500 focus:outline-none transition text-sm" placeholder="e.g. Empowering Brands With Digital Magic" />
+                </div>
+              </div>
+
+              <!-- LOGO CHANGE & CUSTOMIZATION CARD -->
+              <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6 space-y-6">
+                <div class="border-b border-slate-100 pb-4">
+                  <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-sm">
+                      <i class="fa-solid fa-image"></i>
+                    </div>
+                    <div>
+                      <h3 class="font-bold text-slate-900 text-base">Logo Image &amp; Display Type</h3>
+                      <p class="text-xs text-slate-500">Choose how your brand logo appears in the top navigation bar and footer</p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Logo Display Mode Selection -->
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-3">Logo Display Mode</label>
+                  <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <label class="flex items-center gap-3 p-3.5 rounded-xl border border-slate-200 hover:border-blue-400 cursor-pointer bg-slate-50/50 has-[:checked]:border-blue-600 has-[:checked]:bg-blue-50/40 transition">
+                      <input type="radio" name="logo-type-radio" value="text" onchange="setLogoType('text')" class="w-4 h-4 text-blue-600" />
+                      <div>
+                        <div class="text-xs font-bold text-slate-900">Text Only</div>
+                        <div class="text-[11px] text-slate-500">Brand name text only</div>
+                      </div>
+                    </label>
+
+                    <label class="flex items-center gap-3 p-3.5 rounded-xl border border-slate-200 hover:border-blue-400 cursor-pointer bg-slate-50/50 has-[:checked]:border-blue-600 has-[:checked]:bg-blue-50/40 transition">
+                      <input type="radio" name="logo-type-radio" value="image" onchange="setLogoType('image')" class="w-4 h-4 text-blue-600" />
+                      <div>
+                        <div class="text-xs font-bold text-slate-900">Image Logo Only</div>
+                        <div class="text-[11px] text-slate-500">Pure graphic logo image</div>
+                      </div>
+                    </label>
+
+                    <label class="flex items-center gap-3 p-3.5 rounded-xl border border-slate-200 hover:border-blue-400 cursor-pointer bg-slate-50/50 has-[:checked]:border-blue-600 has-[:checked]:bg-blue-50/40 transition">
+                      <input type="radio" name="logo-type-radio" value="both" onchange="setLogoType('both')" class="w-4 h-4 text-blue-600" />
+                      <div>
+                        <div class="text-xs font-bold text-slate-900">Image + Brand Text</div>
+                        <div class="text-[11px] text-slate-500">Logo icon next to text</div>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- Logo Image Upload & URL Inputs -->
+                <div class="space-y-4">
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Option A: File Upload -->
+                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-200/80">
+                      <label class="block text-xs font-bold text-slate-700 mb-1">
+                        <i class="fa-solid fa-cloud-arrow-up text-blue-600 mr-1"></i> Upload Logo File
+                      </label>
+                      <p class="text-[11px] text-slate-400 mb-3">Upload PNG, SVG, JPG, or WebP from your computer.</p>
+                      <input type="file" id="gen-logo-file-input" accept="image/*" onchange="handleLogoFileUpload(event)" class="hidden" />
+                      <div class="flex gap-2">
+                        <button 
+                          type="button" 
+                          onclick="document.getElementById('gen-logo-file-input').click()" 
+                          class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold py-2 px-4 rounded-xl shadow-sm transition active:scale-95 flex items-center gap-1.5"
+                        >
+                          <i class="fa-solid fa-upload"></i>
+                          <span>Choose Logo Image</span>
+                        </button>
+                        <button 
+                          type="button" 
+                          onclick="clearLogoImage()" 
+                          class="bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-semibold py-2 px-3 rounded-xl transition"
+                          title="Remove current logo image"
+                        >
+                          Clear
+                        </button>
+                      </div>
+                    </div>
+
+                    <!-- Option B: Direct URL -->
+                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-200/80">
+                      <label class="block text-xs font-bold text-slate-700 mb-1">
+                        <i class="fa-solid fa-link text-blue-600 mr-1"></i> Or Enter Image URL
+                      </label>
+                      <p class="text-[11px] text-slate-400 mb-2">Direct link to hosted logo image.</p>
+                      <input 
+                        type="url" 
+                        id="gen-logo-image-url" 
+                        oninput="handleLogoUrlInput(this.value)" 
+                        class="w-full px-3 py-2 rounded-xl border border-slate-200 text-slate-900 text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none" 
+                        placeholder="https://example.com/logo.png" 
+                      />
+                    </div>
+                  </div>
+
+                  <!-- Logo Height Slider -->
+                  <div>
+                    <div class="flex items-center justify-between mb-1.5">
+                      <label class="text-xs font-bold uppercase tracking-wider text-slate-700">Logo Height (Navbar Scale)</label>
+                      <span id="gen-logo-height-val" class="text-xs font-bold text-blue-600">36px</span>
+                    </div>
+                    <input 
+                      type="range" 
+                      id="gen-logo-height" 
+                      min="20" 
+                      max="70" 
+                      value="36" 
+                      oninput="handleLogoHeightChange(this.value)" 
+                      class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-600" 
+                    />
+                    <div class="flex justify-between text-[10px] text-slate-400 mt-1">
+                      <span>20px (Compact)</span>
+                      <span>36px (Standard)</span>
+                      <span>70px (Large)</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Live Logo Navbar Preview Card -->
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">Live Navbar Logo Preview</label>
+                  <div class="p-5 bg-[#0b132b] text-white rounded-xl border border-slate-800 flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                      <img id="preview-logo-img" src="" alt="Brand Logo" class="hidden object-contain max-h-12" />
+                      <span id="preview-logo-text" class="text-xl font-bold tracking-tight text-white">Pixel Craft</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-xs text-slate-400 bg-white/5 px-3 py-1.5 rounded-full border border-white/10">
+                      <i class="fa-solid fa-circle-check text-green-400"></i>
+                      <span>Live Header View</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="flex justify-end pt-2">
+                  <button onclick="saveGeneralSettings()" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm px-6 py-2.5 rounded-xl shadow-md transition active:scale-95">
+                    <i class="fa-solid fa-floppy-disk mr-2"></i> Save Brand &amp; Logo
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- ==================== TAB 3: HERO SECTION ==================== -->
+            <div id="tab-hero" class="tab-content hidden space-y-6">
+              <div>
+                <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Hero Section Manager</h2>
+                <p class="text-slate-500 text-sm mt-0.5">Customize the main hero title, description, buttons, and video showcase</p>
+              </div>
+
+              <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6 space-y-6">
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">Main Headline / Hero Title</label>
+                  <input type="text" id="hero-title" oninput="handleLiveInputChange()" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-slate-900 focus:ring-2 focus:ring-blue-500 focus:outline-none transition text-sm font-semibold" placeholder="e.g. Empowering Brands With Digital Magic" />
+                </div>
+
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">Hero Subtitle / Description</label>
+                  <textarea id="hero-subtitle" oninput="handleLiveInputChange()" rows="3" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-slate-900 focus:ring-2 focus:ring-blue-500 focus:outline-none transition text-sm resize-none"></textarea>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">Primary Button Text</label>
+                    <input type="text" id="hero-primary-btn" oninput="handleLiveInputChange()" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-slate-900 focus:ring-2 focus:ring-blue-500 focus:outline-none transition text-sm" placeholder="e.g. Start a Project" />
+                  </div>
+                  <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">Primary Button Link</label>
+                    <input type="text" id="hero-primary-link" oninput="handleLiveInputChange()" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-slate-900 focus:ring-2 focus:ring-blue-500 focus:outline-none transition text-sm" placeholder="e.g. #contact" />
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">Video Button Text</label>
+                    <input type="text" id="hero-video-btn" oninput="handleLiveInputChange()" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-slate-900 focus:ring-2 focus:ring-blue-500 focus:outline-none transition text-sm" placeholder="e.g. Watch Video" />
+                  </div>
+                  <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">YouTube / Video Embed URL</label>
+                    <input type="url" id="hero-video-url" oninput="handleLiveInputChange()" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-slate-900 focus:ring-2 focus:ring-blue-500 focus:outline-none transition text-sm" placeholder="https://www.youtube.com/embed/..." />
+                  </div>
+                </div>
+
+                <div class="flex justify-end pt-2">
+                  <button onclick="saveHeroSettings()" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm px-6 py-2.5 rounded-xl shadow-md transition active:scale-95">
+                    <i class="fa-solid fa-floppy-disk mr-2"></i> Save Hero Section
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- ==================== TAB 4: SERVICES (WHAT WE DO) ==================== -->
+            <div id="tab-services" class="tab-content hidden space-y-6">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h2 class="text-2xl font-bold text-slate-900 tracking-tight">What We Do (Services)</h2>
+                  <p class="text-slate-500 text-sm mt-0.5">Add, edit, or remove the service cards displayed on your landing page</p>
+                </div>
+                <button onclick="addNewServiceModal()" class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold px-4 py-2.5 rounded-xl shadow-sm transition">
+                  <i class="fa-solid fa-plus mr-1"></i> Add Service
+                </button>
+              </div>
+
+              <div id="services-list-container" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+
+            <!-- ==================== TAB 5: ABOUT US ==================== -->
+            <div id="tab-about" class="tab-content hidden space-y-6">
+              <div>
+                <h2 class="text-2xl font-bold text-slate-900 tracking-tight">About Us Manager</h2>
+                <p class="text-slate-500 text-sm mt-0.5">Customize the About Us section image, headline, and feature checklist items</p>
+              </div>
+
+              <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6 space-y-6">
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">Section Headline</label>
+                  <input type="text" id="about-title" oninput="handleLiveInputChange()" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-slate-900 focus:ring-2 focus:ring-blue-500 focus:outline-none transition text-sm" placeholder="About Us" />
+                </div>
+
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">Team Image URL</label>
+                  <div class="flex gap-4 items-center">
+                    <input type="url" id="about-image-url" oninput="updateAboutPreview(this.value); handleLiveInputChange();" class="flex-1 px-4 py-2.5 rounded-xl border border-slate-200 text-slate-900 focus:ring-2 focus:ring-blue-500 focus:outline-none transition text-sm" placeholder="https://..." />
+                    <img id="about-image-preview" src="" alt="Preview" class="w-16 h-12 rounded-lg object-cover border border-slate-200" />
+                  </div>
+                </div>
+
+                <!-- About Features Checklist -->
+                <div>
+                  <div class="flex items-center justify-between mb-3">
+                    <label class="text-xs font-bold uppercase tracking-wider text-slate-700">Checklist Features</label>
+                    <button type="button" onclick="addAboutFeature()" class="text-xs text-blue-600 font-semibold hover:underline">
+                      <i class="fa-solid fa-plus text-[10px]"></i> Add Feature
+                    </button>
+                  </div>
+                  <div id="about-features-container" class="space-y-3">
+                    <!-- Dynamically populated -->
+                  </div>
+                </div>
+
+                <div class="flex justify-end pt-2">
+                  <button onclick="saveAboutSettings()" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm px-6 py-2.5 rounded-xl shadow-md transition active:scale-95">
+                    <i class="fa-solid fa-floppy-disk mr-2"></i> Save About Us
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- ==================== TAB 6: PRICING & PRODUCTS ==================== -->
+            <div id="tab-pricing" class="tab-content hidden space-y-6">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                  <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Pricing Plans &amp; Products</h2>
+                  <p class="text-slate-500 text-sm mt-0.5">Edit plan names, pricing amounts, popular badges, and feature lists</p>
+                </div>
+                <div class="flex gap-2">
+                  <button onclick="switchTab('ordering')" class="bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold px-3.5 py-2.5 rounded-xl transition">
+                    <i class="fa-solid fa-sliders mr-1"></i> Ordering Settings
+                  </button>
+                  <button onclick="addNewPricingPlan()" class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold px-4 py-2.5 rounded-xl shadow-sm transition">
+                    <i class="fa-solid fa-plus mr-1"></i> Add New Plan
+                  </button>
+                </div>
+              </div>
+
+              <!-- Pricing Plans Cards -->
+              <div id="pricing-plans-container" class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Dynamically populated with complete interactive editors -->
+              </div>
+            </div>
+
+            <!-- ==================== TAB 7: ORDERING & CHECKOUT SETTINGS ==================== -->
+            <div id="tab-ordering" class="tab-content hidden space-y-6">
+              <div>
+                <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Ordering &amp; Order Confirmation Settings</h2>
+                <p class="text-slate-500 text-sm mt-0.5">Control how clients place orders on the public website, checkout modal settings, and confirmation notices</p>
+              </div>
+
+              <!-- Order Flow & Acceptance Card -->
+              <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6 space-y-6">
+                <!-- Enable Ordering Switch -->
+                <div class="flex items-center justify-between p-4 bg-slate-50 rounded-xl border border-slate-200/80">
+                  <div>
+                    <h3 class="font-bold text-slate-900 text-sm">Accept Online Orders</h3>
+                    <p class="text-xs text-slate-500">When enabled, visitors can place orders directly through the pricing cards on the public website.</p>
+                  </div>
+                  <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" id="ord-enabled" class="sr-only peer" checked onchange="handleLiveInputChange()" />
+                    <div class="w-11 h-6 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-600"></div>
+                  </label>
+                </div>
+
+                <!-- Public Ordering Flow Mode -->
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">Public Site Ordering Mode</label>
+                  <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <label class="flex items-start gap-3 p-4 rounded-xl border border-slate-200 hover:border-blue-400 cursor-pointer bg-slate-50/50 has-[:checked]:border-blue-600 has-[:checked]:bg-blue-50/40 transition">
+                      <input type="radio" name="ordering-mode" id="ord-mode-modal" value="modal" class="mt-0.5 w-4 h-4 text-blue-600" checked onchange="handleLiveInputChange()" />
+                      <div>
+                        <div class="text-xs font-bold text-slate-900">Order Modal (Recommended)</div>
+                        <div class="text-[11px] text-slate-500 mt-0.5">Sleek checkout modal on site with customer form &amp; instant Order ID confirmation</div>
+                      </div>
+                    </label>
+
+                    <label class="flex items-start gap-3 p-4 rounded-xl border border-slate-200 hover:border-blue-400 cursor-pointer bg-slate-50/50 has-[:checked]:border-blue-600 has-[:checked]:bg-blue-50/40 transition">
+                      <input type="radio" name="ordering-mode" id="ord-mode-whatsapp" value="whatsapp" class="mt-0.5 w-4 h-4 text-blue-600" onchange="handleLiveInputChange()" />
+                      <div>
+                        <div class="text-xs font-bold text-slate-900">WhatsApp Instant Order</div>
+                        <div class="text-[11px] text-slate-500 mt-0.5">Redirects customer to WhatsApp with formatted plan, price &amp; order message</div>
+                      </div>
+                    </label>
+
+                    <label class="flex items-start gap-3 p-4 rounded-xl border border-slate-200 hover:border-blue-400 cursor-pointer bg-slate-50/50 has-[:checked]:border-blue-600 has-[:checked]:bg-blue-50/40 transition">
+                      <input type="radio" name="ordering-mode" id="ord-mode-contact" value="contact" class="mt-0.5 w-4 h-4 text-blue-600" onchange="handleLiveInputChange()" />
+                      <div>
+                        <div class="text-xs font-bold text-slate-900">Contact Form Inquiry</div>
+                        <div class="text-[11px] text-slate-500 mt-0.5">Scrolls to contact form and pre-fills selected plan message</div>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- Currency and Default CTA Button Text -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">Currency Symbol</label>
+                    <input type="text" id="ord-currency" oninput="handleLiveInputChange()" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-slate-900 text-sm font-bold focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="$" />
+                    <p class="text-[11px] text-slate-400 mt-1">Symbol applied across all pricing tiers (e.g. $, €, £, ₹, ৳).</p>
+                  </div>
+
+                  <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">Default Plan Button Label</label>
+                    <input type="text" id="ord-default-cta" oninput="handleLiveInputChange()" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-slate-900 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Order Now" />
+                    <p class="text-[11px] text-slate-400 mt-1">Button text used on pricing plans unless overridden per plan.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Order Confirmation Settings Card -->
+              <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6 space-y-6">
+                <div class="border-b border-slate-100 pb-3">
+                  <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm">
+                      <i class="fa-solid fa-circle-check"></i>
+                    </div>
+                    <div>
+                      <h3 class="font-bold text-slate-900 text-base">Order Confirmation Modal Settings</h3>
+                      <p class="text-xs text-slate-500">Configure what message clients see after clicking "Confirm Order"</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">Confirmation Headline</label>
+                  <input type="text" id="ord-confirm-title" oninput="handleLiveInputChange()" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-slate-900 text-sm font-bold focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Order Confirmed! Thank You" />
+                  <p class="text-[11px] text-slate-400 mt-1">Primary title shown in the green confirmation modal screen.</p>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">Confirmation Message &amp; Next Steps</label>
+                  <textarea id="ord-confirm-message" oninput="handleLiveInputChange()" rows="3" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-slate-900 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none resize-none" placeholder="Your order has been received successfully. Our team will contact you within 2-4 hours to finalize your project setup."></textarea>
+                  <p class="text-[11px] text-slate-400 mt-1">Detailed message explaining onboarding, timeline, or next steps to the customer.</p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                  <label class="flex items-center gap-3 p-3 bg-slate-50 rounded-xl border border-slate-200/80 cursor-pointer">
+                    <input type="checkbox" id="ord-require-phone" checked class="w-4 h-4 text-blue-600 rounded" onchange="handleLiveInputChange()" />
+                    <div>
+                      <div class="text-xs font-bold text-slate-800">Require Phone Number</div>
+                      <div class="text-[10px] text-slate-500">Customer must enter a valid phone number to submit order</div>
+                    </div>
+                  </label>
+
+                  <label class="flex items-center gap-3 p-3 bg-slate-50 rounded-xl border border-slate-200/80 cursor-pointer">
+                    <input type="checkbox" id="ord-auto-confirm" checked class="w-4 h-4 text-blue-600 rounded" onchange="handleLiveInputChange()" />
+                    <div>
+                      <div class="text-xs font-bold text-slate-800">Auto-Confirm Placed Orders</div>
+                      <div class="text-[10px] text-slate-500">Marks new orders as "Confirmed" (uncheck for "Pending Review")</div>
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+              <!-- WhatsApp Order Fast-Track Card -->
+              <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6 space-y-6">
+                <div class="border-b border-slate-100 pb-3">
+                  <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm">
+                      <i class="fa-brands fa-whatsapp text-lg"></i>
+                    </div>
+                    <div>
+                      <h3 class="font-bold text-slate-900 text-base">WhatsApp Order Notifications &amp; Fast-Track</h3>
+                      <p class="text-xs text-slate-500">Connect orders directly to your WhatsApp business account</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">WhatsApp Business Phone</label>
+                    <input type="text" id="ord-wa-number" oninput="handleLiveInputChange()" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-slate-900 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="+1234567890" />
+                    <p class="text-[11px] text-slate-400 mt-1">Include country code (e.g. +1 for US/Canada, +44 for UK, etc.).</p>
+                  </div>
+
+                  <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">WhatsApp Message Template</label>
+                    <input type="text" id="ord-wa-message" oninput="handleLiveInputChange()" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-slate-900 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Hi! I placed order for {plan} (${price}{period}). Order ID: {orderId}" />
+                    <p class="text-[11px] text-slate-400 mt-1">Variables supported: <code>{plan}</code>, <code>{price}</code>, <code>{period}</code>, <code>{currency}</code>, <code>{orderId}</code></p>
+                  </div>
+                </div>
+
+                <div class="flex justify-end pt-2">
+                  <button onclick="saveOrderingSettings()" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm px-6 py-2.5 rounded-xl shadow-md transition active:scale-95">
+                    <i class="fa-solid fa-floppy-disk mr-2"></i> Save Ordering Settings
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- ==================== TAB 8: CUSTOMER ORDERS ==================== -->
+            <div id="tab-orders" class="tab-content hidden space-y-6">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                  <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Customer Orders Management</h2>
+                  <p class="text-slate-500 text-sm mt-0.5">Manage incoming orders placed via the public website pricing section</p>
+                </div>
+                <div class="flex gap-2">
+                  <button onclick="clearAllOrdersModal()" class="text-xs text-red-600 hover:text-red-800 font-semibold px-3 py-2 rounded-lg border border-red-200 hover:bg-red-50 transition">
+                    <i class="fa-solid fa-trash-can mr-1"></i> Clear Orders
+                  </button>
+                </div>
+              </div>
+
+              <!-- Order Summary Stats -->
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-sm">
+                  <div class="text-xs text-slate-400 font-semibold uppercase">Total Orders</div>
+                  <div id="order-stat-total" class="text-xl font-bold text-slate-900 mt-1">0</div>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-sm">
+                  <div class="text-xs text-emerald-600 font-semibold uppercase">Confirmed</div>
+                  <div id="order-stat-confirmed" class="text-xl font-bold text-emerald-600 mt-1">0</div>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-sm">
+                  <div class="text-xs text-amber-600 font-semibold uppercase">Pending</div>
+                  <div id="order-stat-pending" class="text-xl font-bold text-amber-600 mt-1">0</div>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-sm">
+                  <div class="text-xs text-blue-600 font-semibold uppercase">Total Value</div>
+                  <div id="order-stat-revenue" class="text-xl font-bold text-blue-600 mt-1">$0</div>
+                </div>
+              </div>
+
+              <!-- Orders Table Filter Bar -->
+              <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
+                <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between flex-wrap gap-3">
+                  <div class="flex items-center gap-2">
+                    <label class="text-xs font-bold text-slate-600 uppercase">Filter Status:</label>
+                    <select id="orders-filter-status" onchange="renderOrdersTable()" class="text-xs bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                      <option value="all">All Orders</option>
+                      <option value="Confirmed">Confirmed</option>
+                      <option value="Pending">Pending</option>
+                      <option value="Completed">Completed</option>
+                      <option value="Cancelled">Cancelled</option>
+                    </select>
+                  </div>
+                  <div class="text-xs text-slate-400">
+                    Click any order row to view full details
+                  </div>
+                </div>
+
+                <!-- Orders Table Container -->
+                <div id="orders-table-container">
+                  <!-- Dynamically populated -->
+                </div>
+              </div>
+            </div>
+
+            <!-- ==================== TAB 9: CONTACT & FOOTER ==================== -->
+            <div id="tab-contact" class="tab-content hidden space-y-6">
+              <div>
+                <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Contact Information &amp; Social Links</h2>
+                <p class="text-slate-500 text-sm mt-0.5">Configure phone numbers, email address, physical location, and social links</p>
+              </div>
+
+              <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6 space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">Phone Number</label>
+                    <input type="text" id="contact-phone" oninput="handleLiveInputChange()" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-slate-900 focus:ring-2 focus:ring-blue-500 focus:outline-none transition text-sm" placeholder="e.g. (015) 232-7880" />
+                  </div>
+                  <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">Email Address</label>
+                    <input type="email" id="contact-email" oninput="handleLiveInputChange()" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-slate-900 focus:ring-2 focus:ring-blue-500 focus:outline-none transition text-sm" placeholder="e.g. email@pixelcraft.com" />
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">Physical Address</label>
+                  <textarea id="contact-address" oninput="handleLiveInputChange()" rows="2" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-slate-900 focus:ring-2 focus:ring-blue-500 focus:outline-none transition text-sm" placeholder="222 H. Address Street, Hank, 38003"></textarea>
+                </div>
+
+                <div class="border-t border-slate-100 pt-6">
+                  <h3 class="font-bold text-slate-900 text-sm uppercase tracking-wider mb-4">Footer &amp; Social Media Links</h3>
+                  
+                  <div class="mb-4">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">Footer Copyright Text</label>
+                    <input type="text" id="footer-copyright" oninput="handleLiveInputChange()" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-slate-900 focus:ring-2 focus:ring-blue-500 focus:outline-none transition text-sm" placeholder="Copyright Pixel Craft. All rights reserved." />
+                  </div>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label class="block text-xs font-semibold text-slate-600 mb-1"><i class="fa-brands fa-instagram text-pink-600 mr-1.5"></i> Instagram URL</label>
+                      <input type="url" id="social-instagram" oninput="handleLiveInputChange()" class="w-full px-3.5 py-2 rounded-lg border border-slate-200 text-slate-900 text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+                    </div>
+                    <div>
+                      <label class="block text-xs font-semibold text-slate-600 mb-1"><i class="fa-brands fa-x-twitter text-slate-800 mr-1.5"></i> X / Twitter URL</label>
+                      <input type="url" id="social-twitter" oninput="handleLiveInputChange()" class="w-full px-3.5 py-2 rounded-lg border border-slate-200 text-slate-900 text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+                    </div>
+                    <div>
+                      <label class="block text-xs font-semibold text-slate-600 mb-1"><i class="fa-brands fa-facebook text-blue-600 mr-1.5"></i> Facebook URL</label>
+                      <input type="url" id="social-facebook" oninput="handleLiveInputChange()" class="w-full px-3.5 py-2 rounded-lg border border-slate-200 text-slate-900 text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+                    </div>
+                    <div>
+                      <label class="block text-xs font-semibold text-slate-600 mb-1"><i class="fa-brands fa-youtube text-red-600 mr-1.5"></i> YouTube URL</label>
+                      <input type="url" id="social-youtube" oninput="handleLiveInputChange()" class="w-full px-3.5 py-2 rounded-lg border border-slate-200 text-slate-900 text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="flex justify-end pt-2">
+                  <button onclick="saveContactSettings()" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm px-6 py-2.5 rounded-xl shadow-md transition active:scale-95">
+                    <i class="fa-solid fa-floppy-disk mr-2"></i> Save Contact &amp; Footer
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- ==================== TAB 10: INBOX / MESSAGES ==================== -->
+            <div id="tab-inbox" class="tab-content hidden space-y-6">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Visitor Inquiries Inbox</h2>
+                  <p class="text-slate-500 text-sm mt-0.5">Messages submitted by potential clients via your landing page contact form</p>
+                </div>
+                <div class="flex gap-2">
+                  <button onclick="clearAllMessagesModal()" class="text-xs text-red-600 hover:text-red-800 font-semibold px-3 py-2 rounded-lg border border-red-200 hover:bg-red-50 transition">
+                    <i class="fa-solid fa-trash-can mr-1"></i> Clear All
+                  </button>
+                </div>
+              </div>
+
+              <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
+                <div id="messages-table-container">
+                  <!-- Dynamically populated table -->
+                </div>
+              </div>
+            </div>
+
+            <!-- ==================== TAB 11: LIVE WEBSITE PREVIEW (FULL TAB) ==================== -->
+            <div id="tab-preview" class="tab-content hidden space-y-4">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div>
+                  <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Live Website Preview</h2>
+                  <p class="text-slate-500 text-sm mt-0.5">Real-time preview of changes across desktop, tablet, and mobile devices</p>
+                </div>
+                <!-- Device view switcher -->
+                <div class="flex items-center gap-2 bg-white p-1 rounded-xl border border-slate-200 shadow-sm">
+                  <button onclick="setTabPreviewDevice('desktop')" id="tab-dev-desktop" class="device-btn active px-3 py-1.5 rounded-lg text-xs font-semibold border border-transparent transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-desktop"></i>
+                    <span>Desktop</span>
+                  </button>
+                  <button onclick="setTabPreviewDevice('tablet')" id="tab-dev-tablet" class="device-btn px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 border border-transparent hover:bg-slate-100 transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-tablet-screen-button"></i>
+                    <span>Tablet</span>
+                  </button>
+                  <button onclick="setTabPreviewDevice('mobile')" id="tab-dev-mobile" class="device-btn px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 border border-transparent hover:bg-slate-100 transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-mobile-screen"></i>
+                    <span>Mobile</span>
+                  </button>
+                  <div class="h-4 w-[1px] bg-slate-200 mx-1"></div>
+                  <button onclick="refreshTabPreview()" title="Refresh Preview" class="p-1.5 text-slate-500 hover:text-slate-800 rounded-lg hover:bg-slate-100 transition">
+                    <i class="fa-solid fa-rotate-right text-xs"></i>
+                  </button>
+                  <a href="index.html" target="_blank" title="Open in new window" class="p-1.5 text-slate-500 hover:text-blue-600 rounded-lg hover:bg-slate-100 transition">
+                    <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Iframe Mockup Container -->
+              <div class="bg-slate-800 rounded-2xl p-3 sm:p-4 shadow-xl border border-slate-700 flex justify-center">
+                <div id="tab-preview-frame-wrapper" class="w-full bg-white rounded-xl overflow-hidden shadow-2xl transition-all duration-300" style="height: 750px;">
+                  <iframe id="tab-preview-iframe" src="index.html" class="w-full h-full border-0"></iframe>
+                </div>
+              </div>
+            </div>
+
+            <!-- ==================== TAB 12: BACKUP & RESET ==================== -->
+            <div id="tab-backup" class="tab-content hidden space-y-6">
+              <div>
+                <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Backup &amp; Reset Management</h2>
+                <p class="text-slate-500 text-sm mt-0.5">Export your website configuration as a JSON backup or restore default settings</p>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Export -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col justify-between">
+                  <div>
+                    <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl mb-4">
+                      <i class="fa-solid fa-file-export"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-900 text-base">Export Backup</h3>
+                    <p class="text-xs text-slate-500 mt-1">Download a `.json` backup file containing all your website texts, pricing, and settings.</p>
+                  </div>
+                  <button onclick="exportConfigFile()" class="mt-6 w-full bg-slate-900 hover:bg-black text-white text-xs font-semibold py-2.5 px-4 rounded-xl shadow transition">
+                    <i class="fa-solid fa-download mr-1.5"></i> Download Backup (JSON)
+                  </button>
+                </div>
+
+                <!-- Import -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col justify-between">
+                  <div>
+                    <div class="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-xl mb-4">
+                      <i class="fa-solid fa-file-import"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-900 text-base">Import Backup</h3>
+                    <p class="text-xs text-slate-500 mt-1">Upload a previously exported `.json` configuration file to restore your settings.</p>
+                  </div>
+                  <div>
+                    <input type="file" id="import-file-input" accept=".json" onchange="handleImportFile(event)" class="hidden" />
+                    <button onclick="document.getElementById('import-file-input').click()" class="mt-6 w-full bg-purple-600 hover:bg-purple-700 text-white text-xs font-semibold py-2.5 px-4 rounded-xl shadow transition">
+                      <i class="fa-solid fa-upload mr-1.5"></i> Upload Config File
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Reset to Defaults -->
+                <div class="bg-white p-6 rounded-2xl border border-red-200 shadow-sm flex flex-col justify-between">
+                  <div>
+                    <div class="w-12 h-12 rounded-xl bg-red-50 text-red-600 flex items-center justify-center text-xl mb-4">
+                      <i class="fa-solid fa-rotate-left"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-900 text-base">Factory Reset</h3>
+                    <p class="text-xs text-slate-500 mt-1">Revert all website headings, pricing plans, and content back to initial default values.</p>
+                  </div>
+                  <button onclick="confirmResetDefaults()" class="mt-6 w-full bg-red-600 hover:bg-red-700 text-white text-xs font-semibold py-2.5 px-4 rounded-xl shadow transition">
+                    <i class="fa-solid fa-triangle-exclamation mr-1.5"></i> Reset to Factory
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- ==================== TAB 13: ADMIN SECURITY ==================== -->
+            <div id="tab-security" class="tab-content hidden space-y-6">
+              <div>
+                <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Admin Credentials &amp; Security</h2>
+                <p class="text-slate-500 text-sm mt-0.5">Change your admin username and password for accessing this panel</p>
+              </div>
+
+              <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6 space-y-6 max-w-xl">
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">New Admin Username</label>
+                  <input type="text" id="sec-username" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-slate-900 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+                </div>
+
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">New Password</label>
+                  <div class="relative">
+                    <input type="password" id="sec-password" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-slate-900 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+                    <button type="button" onclick="togglePasswordVisibility('sec-password')" class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400">
+                      <i class="fa-regular fa-eye text-sm"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="flex justify-end pt-2">
+                  <button onclick="saveAdminCredentialsForm()" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm px-6 py-2.5 rounded-xl shadow-md transition active:scale-95">
+                    <i class="fa-solid fa-key mr-2"></i> Update Credentials
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- ==================== TAB 14: FIREBASE CLOUD DATABASE ==================== -->
+            <div id="tab-firebase" class="tab-content hidden space-y-6">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                  <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Firebase Cloud Storage &amp; Sync</h2>
+                  <p class="text-slate-500 text-sm mt-0.5">Connect Google Cloud Firestore for real-time cloud data storage, orders, and inquiries</p>
+                </div>
+                <div class="flex gap-2">
+                  <a href="firebase-setup.html" target="_blank" class="bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold px-4 py-2.5 rounded-xl transition flex items-center gap-1.5 shadow-sm">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    <span>Setup Wizard</span>
+                  </a>
+                  <button onclick="handleTestFirebaseConnection()" class="bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold px-4 py-2.5 rounded-xl transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-vial"></i>
+                    <span>Test Connection</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Real-time Connection Status Card -->
+              <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6 space-y-4">
+                <div class="flex items-center justify-between flex-wrap gap-4 pb-4 border-b border-slate-100">
+                  <div class="flex items-center gap-3">
+                    <div id="fb-status-icon-box" class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-2xl border border-amber-200">
+                      <i class="fa-solid fa-cloud"></i>
+                    </div>
+                    <div>
+                      <div class="flex items-center gap-2">
+                        <span id="fb-status-title" class="font-bold text-slate-900 text-base">Local Storage Mode</span>
+                        <span id="fb-status-pill" class="bg-amber-100 text-amber-800 text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase">Offline / Local</span>
+                      </div>
+                      <p id="fb-status-desc" class="text-xs text-slate-500 mt-0.5">Firebase cloud credentials not yet configured. All data is securely persisted in your browser.</p>
+                    </div>
+                  </div>
+
+                  <div class="text-right">
+                    <div class="text-[11px] font-semibold text-slate-400 uppercase">Cloud Project</div>
+                    <div id="fb-status-project" class="font-mono font-bold text-slate-700 text-sm">None</div>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+                  <div class="p-3 bg-slate-50 rounded-xl border border-slate-100 flex items-center gap-2.5">
+                    <i class="fa-solid fa-sliders text-blue-600 text-sm"></i>
+                    <div>
+                      <span class="text-slate-400 block text-[10px] uppercase font-bold">CMS Config</span>
+                      <code class="text-slate-700 font-semibold">config/cms</code>
+                    </div>
+                  </div>
+                  <div class="p-3 bg-slate-50 rounded-xl border border-slate-100 flex items-center gap-2.5">
+                    <i class="fa-solid fa-bag-shopping text-emerald-600 text-sm"></i>
+                    <div>
+                      <span class="text-slate-400 block text-[10px] uppercase font-bold">Orders Collection</span>
+                      <code class="text-slate-700 font-semibold">orders/*</code>
+                    </div>
+                  </div>
+                  <div class="p-3 bg-slate-50 rounded-xl border border-slate-100 flex items-center gap-2.5">
+                    <i class="fa-solid fa-inbox text-purple-600 text-sm"></i>
+                    <div>
+                      <span class="text-slate-400 block text-[10px] uppercase font-bold">Messages Collection</span>
+                      <code class="text-slate-700 font-semibold">messages/*</code>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Firebase Credentials Form Card -->
+              <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6 space-y-6">
+                <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+                  <div>
+                    <h3 class="font-bold text-slate-900 text-base">Firebase Web App Credentials</h3>
+                    <p class="text-xs text-slate-500 mt-0.5">Enter the Firebase configuration object from your Firebase Console project settings</p>
+                  </div>
+                  <label class="flex items-center gap-2 cursor-pointer bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-200">
+                    <input type="checkbox" id="fb-enabled" class="w-4 h-4 text-blue-600 rounded" />
+                    <span class="text-xs font-bold text-slate-700">Enable Cloud Storage</span>
+                  </label>
+                </div>
+
+                <!-- Quick Snippet Paste Box -->
+                <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-4 space-y-3">
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                      <i class="fa-solid fa-paste text-blue-600 text-xs"></i>
+                      <span class="text-xs font-bold text-slate-700">Quick Paste from Firebase Console</span>
+                    </div>
+                    <span class="text-[11px] text-slate-400">Project Settings &gt; General &gt; Your apps</span>
+                  </div>
+                  <textarea 
+                    id="admin-fb-snippet-paste" 
+                    rows="3" 
+                    placeholder="Paste your const firebaseConfig = { ... } snippet here..."
+                    class="w-full bg-white border border-slate-200 rounded-lg p-2.5 font-mono text-[11px] text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                  ></textarea>
+                  <div class="flex justify-end">
+                    <button 
+                      type="button" 
+                      onclick="parseAndFillAdminFirebaseSnippet()" 
+                      class="bg-blue-600 hover:bg-blue-700 text-white text-[11px] font-semibold py-1.5 px-3 rounded-lg shadow-sm transition active:scale-95 flex items-center gap-1.5"
+                    >
+                      <i class="fa-solid fa-wand-magic-sparkles text-[10px]"></i>
+                      <span>Auto-Fill Credentials</span>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">API Key (apiKey) <span class="text-red-500">*</span></label>
+                    <input type="text" id="fb-api-key" placeholder="AIzaSy..." class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-slate-900 text-xs font-mono focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+                  </div>
+
+                  <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">Project ID (projectId) <span class="text-red-500">*</span></label>
+                    <input type="text" id="fb-project-id" placeholder="my-pixel-project" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-slate-900 text-xs font-mono focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+                  </div>
+
+                  <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">Auth Domain (authDomain)</label>
+                    <input type="text" id="fb-auth-domain" placeholder="my-pixel-project.firebaseapp.com" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-slate-900 text-xs font-mono focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+                  </div>
+
+                  <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">Storage Bucket (storageBucket)</label>
+                    <input type="text" id="fb-storage-bucket" placeholder="my-pixel-project.firebasestorage.app" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-slate-900 text-xs font-mono focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+                  </div>
+
+                  <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">Messaging Sender ID (messagingSenderId)</label>
+                    <input type="text" id="fb-messaging-sender-id" placeholder="1049283719" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-slate-900 text-xs font-mono focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+                  </div>
+
+                  <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">App ID (appId)</label>
+                    <input type="text" id="fb-app-id" placeholder="1:1049283719:web:a8d9b23..." class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-slate-900 text-xs font-mono focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+                  </div>
+
+                  <div class="md:col-span-2">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">Measurement ID (measurementId / Google Analytics)</label>
+                    <input type="text" id="fb-measurement-id" placeholder="G-JK1DKQ3MHR" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-slate-900 text-xs font-mono focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+                  </div>
+                </div>
+
+                <div class="flex flex-wrap items-center justify-between gap-3 pt-2">
+                  <button 
+                    type="button" 
+                    onclick="handleTestFirebaseConnection()" 
+                    class="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold py-2.5 px-4 rounded-xl transition flex items-center gap-1.5"
+                  >
+                    <i class="fa-solid fa-vial text-xs"></i>
+                    <span>Verify &amp; Ping Firestore</span>
+                  </button>
+
+                  <button 
+                    type="button" 
+                    onclick="saveFirebaseSettingsForm()" 
+                    class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold py-2.5 px-5 rounded-xl shadow-md transition active:scale-95 flex items-center gap-1.5"
+                  >
+                    <i class="fa-solid fa-floppy-disk text-xs"></i>
+                    <span>Save Firebase Credentials</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Cloud Migration & Tools Card -->
+              <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6 space-y-4">
+                <div class="flex items-center gap-2">
+                  <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                  </div>
+                  <div>
+                    <h3 class="font-bold text-slate-900 text-base">Cloud Data Migration</h3>
+                    <p class="text-xs text-slate-500">Easily transfer your current website content, customer orders, and inquiries to Firebase Cloud</p>
+                  </div>
+                </div>
+
+                <div class="p-4 bg-slate-50 rounded-xl border border-slate-200/80 flex flex-col sm:flex-row items-center justify-between gap-4">
+                  <div>
+                    <h4 class="text-xs font-bold text-slate-800">Upload All Local Data to Firebase Cloud</h4>
+                    <p class="text-[11px] text-slate-500 mt-0.5">Copies your website configuration, orders, and inquiries up to Firestore in a single click.</p>
+                  </div>
+                  <button 
+                    type="button" 
+                    onclick="handleMigrateLocalToFirebase()" 
+                    id="btn-migrate-firebase"
+                    class="whitespace-nowrap bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold py-2 px-4 rounded-xl shadow-sm transition active:scale-95 flex items-center gap-1.5"
+                  >
+                    <i class="fa-solid fa-cloud-arrow-up text-xs"></i>
+                    <span>Push to Firebase</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Setup Instructions Card -->
+              <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6 space-y-4">
+                <div class="flex items-center gap-2">
+                  <div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-sm">
+                    <i class="fa-solid fa-circle-question"></i>
+                  </div>
+                  <h3 class="font-bold text-slate-900 text-base">Quick 4-Step Firebase Setup Guide</h3>
+                </div>
+
+                <div class="space-y-3 text-xs text-slate-600">
+                  <div class="flex items-start gap-2.5">
+                    <span class="w-5 h-5 rounded-full bg-blue-100 text-blue-700 font-bold flex items-center justify-center text-[10px] flex-shrink-0 mt-0.5">1</span>
+                    <div>
+                      <strong>Open Firebase Console:</strong> Go to <a href="https://console.firebase.google.com" target="_blank" class="text-blue-600 underline">console.firebase.google.com</a> and click <strong>"Create a project"</strong> (or select an existing one).
+                    </div>
+                  </div>
+
+                  <div class="flex items-start gap-2.5">
+                    <span class="w-5 h-5 rounded-full bg-blue-100 text-blue-700 font-bold flex items-center justify-center text-[10px] flex-shrink-0 mt-0.5">2</span>
+                    <div>
+                      <strong>Add a Web App:</strong> In Project Overview, click the Web icon (<code>&lt;/&gt;</code>). Give your app a name and click <strong>"Register app"</strong>. Copy the <code>firebaseConfig</code> values into the form above.
+                    </div>
+                  </div>
+
+                  <div class="flex items-start gap-2.5">
+                    <span class="w-5 h-5 rounded-full bg-blue-100 text-blue-700 font-bold flex items-center justify-center text-[10px] flex-shrink-0 mt-0.5">3</span>
+                    <div>
+                      <strong>Enable Cloud Firestore Database:</strong> In the left sidebar, click <strong>"Build" &gt; "Firestore Database"</strong>, then click <strong>"Create database"</strong>. Select <strong>"Start in test mode"</strong> (allows public read/write during development) and choose your preferred location.
+                    </div>
+                  </div>
+
+                  <div class="flex items-start gap-2.5">
+                    <span class="w-5 h-5 rounded-full bg-blue-100 text-blue-700 font-bold flex items-center justify-center text-[10px] flex-shrink-0 mt-0.5">4</span>
+                    <div>
+                      <strong>Save &amp; Push Data:</strong> Toggle <strong>"Enable Cloud Storage"</strong>, click <strong>"Save Firebase Credentials"</strong>, then click <strong>"Push to Firebase"</strong> to upload all your current settings to the cloud!
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </main>
+
+        <!-- SPLIT-SCREEN LIVE PREVIEW PANE (Right side in split view mode) -->
+        <div id="split-preview-pane" class="hidden w-[46%] bg-slate-900 border-l border-slate-800 flex flex-col z-20 transition-all duration-300">
+          <!-- Split Preview Header Bar -->
+          <div class="px-4 py-2.5 bg-slate-950 border-b border-slate-800 flex items-center justify-between text-xs text-slate-300">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span class="font-bold text-white text-[11px] tracking-wide uppercase">Live Sync Preview</span>
+            </div>
+
+            <!-- Viewport Switcher -->
+            <div class="flex items-center gap-1.5 bg-slate-800/80 p-1 rounded-lg">
+              <button onclick="setSplitDevice('desktop')" id="split-dev-desktop" class="device-btn active px-2.5 py-1 rounded text-[11px] font-semibold border border-transparent transition" title="Desktop view">
+                <i class="fa-solid fa-desktop"></i>
+              </button>
+              <button onclick="setSplitDevice('tablet')" id="split-dev-tablet" class="device-btn px-2.5 py-1 rounded text-[11px] font-semibold text-slate-400 border border-transparent hover:text-white transition" title="Tablet view">
+                <i class="fa-solid fa-tablet-screen-button"></i>
+              </button>
+              <button onclick="setSplitDevice('mobile')" id="split-dev-mobile" class="device-btn px-2.5 py-1 rounded text-[11px] font-semibold text-slate-400 border border-transparent hover:text-white transition" title="Mobile view">
+                <i class="fa-solid fa-mobile-screen"></i>
+              </button>
+            </div>
+
+            <!-- Actions -->
+            <div class="flex items-center gap-2">
+              <button onclick="refreshSplitPreview()" title="Reload Preview" class="p-1 text-slate-400 hover:text-white transition">
+                <i class="fa-solid fa-rotate-right text-xs"></i>
+              </button>
+              <button onclick="toggleSplitView()" title="Close Split View" class="p-1 text-slate-400 hover:text-white transition">
+                <i class="fa-solid fa-xmark text-sm"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Split Preview Iframe Container -->
+          <div class="flex-1 bg-slate-900/60 p-3 flex justify-center items-center overflow-hidden">
+            <div id="split-frame-wrapper" class="w-full h-full bg-white rounded-xl shadow-2xl overflow-hidden transition-all duration-300">
+              <iframe id="split-preview-iframe" src="index.html" class="w-full h-full border-0"></iframe>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ==================== MODALS & TOAST NOTIFICATION ==================== -->
+  
+  <!-- Order Details Modal -->
+  <div id="order-detail-modal" class="fixed inset-0 z-50 bg-black/60 hidden items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-bag-shopping text-emerald-600 text-lg"></i>
+          <h3 class="font-bold text-slate-900 text-lg">Order Details</h3>
+        </div>
+        <button onclick="closeOrderDetailModal()" class="text-slate-400 hover:text-slate-600 p-1">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <input type="hidden" id="modal-order-hidden-id" />
+
+      <div class="space-y-3.5 text-xs sm:text-sm">
+        <div class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100">
+          <div>
+            <span class="text-[11px] font-semibold text-slate-400 uppercase">Order Reference</span>
+            <div id="modal-order-id" class="font-mono font-bold text-blue-600 text-base">#ORD-00000</div>
+          </div>
+          <div class="text-right">
+            <span class="text-[11px] font-semibold text-slate-400 uppercase">Order Status</span>
+            <div><span id="modal-order-status" class="inline-block mt-0.5 font-bold px-2.5 py-0.5 rounded-full text-xs">Confirmed</span></div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+            <span class="text-[11px] font-semibold text-slate-400 uppercase">Customer Name</span>
+            <div id="modal-order-name" class="font-bold text-slate-800 text-sm mt-0.5"></div>
+          </div>
+          <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+            <span class="text-[11px] font-semibold text-slate-400 uppercase">Plan &amp; Amount</span>
+            <div id="modal-order-plan-price" class="font-extrabold text-slate-900 text-sm mt-0.5"></div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+            <span class="text-[11px] font-semibold text-slate-400 uppercase">Email</span>
+            <div id="modal-order-email" class="font-semibold text-blue-600 mt-0.5 truncate"></div>
+          </div>
+          <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+            <span class="text-[11px] font-semibold text-slate-400 uppercase">Phone</span>
+            <div id="modal-order-phone" class="font-semibold text-slate-800 mt-0.5"></div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+            <span class="text-[11px] font-semibold text-slate-400 uppercase">Company / Brand</span>
+            <div id="modal-order-company" class="font-medium text-slate-700 mt-0.5"></div>
+          </div>
+          <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+            <span class="text-[11px] font-semibold text-slate-400 uppercase">Payment Preference</span>
+            <div id="modal-order-payment" class="font-medium text-slate-700 mt-0.5"></div>
+          </div>
+        </div>
+
+        <div>
+          <span class="text-[11px] font-semibold text-slate-400 uppercase">Project Notes / Message:</span>
+          <div id="modal-order-notes" class="p-3.5 bg-slate-50 rounded-xl text-slate-700 mt-1 text-xs whitespace-pre-wrap leading-relaxed border border-slate-100 max-h-28 overflow-y-auto"></div>
+        </div>
+
+        <div class="text-[11px] text-slate-400">
+          Placed On: <span id="modal-order-date" class="font-medium text-slate-600"></span>
+        </div>
+      </div>
+
+      <!-- Action status buttons -->
+      <div class="pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2">
+        <div class="flex items-center gap-1.5">
+          <span class="text-xs font-bold text-slate-500">Change Status:</span>
+          <button onclick="setOrderStatusFromModal('Confirmed')" class="bg-emerald-50 text-emerald-700 hover:bg-emerald-100 text-xs font-semibold px-2.5 py-1 rounded-lg border border-emerald-200 transition">Confirm</button>
+          <button onclick="setOrderStatusFromModal('Completed')" class="bg-purple-50 text-purple-700 hover:bg-purple-100 text-xs font-semibold px-2.5 py-1 rounded-lg border border-purple-200 transition">Complete</button>
+          <button onclick="setOrderStatusFromModal('Cancelled')" class="bg-slate-100 text-slate-600 hover:bg-red-50 hover:text-red-700 text-xs font-semibold px-2.5 py-1 rounded-lg border border-slate-200 transition">Cancel</button>
+        </div>
+        <div class="flex gap-2">
+          <button id="modal-order-reply-btn" class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition">
+            <i class="fa-solid fa-envelope mr-1"></i> Email Customer
+          </button>
+          <button onclick="closeOrderDetailModal()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold px-3 py-1.5 rounded-lg transition">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Message Details Modal -->
+  <div id="msg-detail-modal" class="fixed inset-0 z-50 bg-black/60 hidden items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+        <h3 class="font-bold text-slate-900 text-lg">Inquiry Details</h3>
+        <button onclick="closeMsgModal()" class="text-slate-400 hover:text-slate-600 p-1">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+      <div class="space-y-3 text-sm">
+        <div>
+          <span class="text-xs font-semibold text-slate-400 uppercase">From:</span>
+          <div id="modal-msg-from" class="font-bold text-slate-800"></div>
+        </div>
+        <div>
+          <span class="text-xs font-semibold text-slate-400 uppercase">Email:</span>
+          <div id="modal-msg-email" class="text-blue-600 font-medium"></div>
+        </div>
+        <div>
+          <span class="text-xs font-semibold text-slate-400 uppercase">Received:</span>
+          <div id="modal-msg-date" class="text-slate-500 text-xs"></div>
+        </div>
+        <div>
+          <span class="text-xs font-semibold text-slate-400 uppercase">Message:</span>
+          <div id="modal-msg-body" class="p-4 bg-slate-50 rounded-xl text-slate-700 mt-1 whitespace-pre-wrap leading-relaxed border border-slate-100"></div>
+        </div>
+      </div>
+      <div class="flex justify-between pt-2">
+        <button id="modal-msg-reply" class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold px-4 py-2.5 rounded-xl transition">
+          <i class="fa-solid fa-reply mr-1.5"></i> Reply via Email
+        </button>
+        <button onclick="closeMsgModal()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold px-4 py-2.5 rounded-xl transition">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Service Edit / Add Modal -->
+  <div id="service-modal" class="fixed inset-0 z-50 bg-black/60 hidden items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+        <h3 id="service-modal-title" class="font-bold text-slate-900 text-lg">Edit Service</h3>
+        <button onclick="closeServiceModal()" class="text-slate-400 hover:text-slate-600 p-1">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+      <input type="hidden" id="service-modal-id" />
+      <div class="space-y-4 text-sm">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Service Title</label>
+          <input type="text" id="service-modal-name" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-slate-900 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="e.g. Mobile App Development" />
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Icon (Font Awesome Class)</label>
+          <div class="flex gap-2">
+            <input type="text" id="service-modal-icon" oninput="updateServiceModalIconPreview(this.value)" class="flex-1 px-3.5 py-2.5 rounded-xl border border-slate-200 text-slate-900 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="fa-solid fa-code" />
+            <div id="service-modal-icon-preview" class="w-11 h-11 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-lg border border-blue-200">
+              <i class="fa-solid fa-code"></i>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-2 mt-2 text-xs">
+            <span class="text-slate-400">Suggestions:</span>
+            <button type="button" onclick="setServiceModalIcon('fa-solid fa-code')" class="text-blue-600 hover:underline">Code</button>
+            <button type="button" onclick="setServiceModalIcon('fa-solid fa-layer-group')" class="text-blue-600 hover:underline">Design</button>
+            <button type="button" onclick="setServiceModalIcon('fa-solid fa-bullhorn')" class="text-blue-600 hover:underline">Marketing</button>
+            <button type="button" onclick="setServiceModalIcon('fa-solid fa-rocket')" class="text-blue-600 hover:underline">Rocket</button>
+            <button type="button" onclick="setServiceModalIcon('fa-solid fa-mobile-screen')" class="text-blue-600 hover:underline">Mobile</button>
+            <button type="button" onclick="setServiceModalIcon('fa-solid fa-chart-line')" class="text-blue-600 hover:underline">Analytics</button>
+          </div>
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Description</label>
+          <textarea id="service-modal-desc" rows="3" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-slate-900 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none resize-none" placeholder="Short description of this service offering..."></textarea>
+        </div>
+      </div>
+      <div class="flex justify-end gap-2 pt-2">
+        <button onclick="closeServiceModal()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold px-4 py-2.5 rounded-xl transition">Cancel</button>
+        <button onclick="saveServiceModal()" class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold px-5 py-2.5 rounded-xl transition">Save Service</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Admin Toast Notification -->
+  <div id="admin-toast" class="fixed bottom-6 right-6 z-50 transform translate-y-28 opacity-0 transition-all duration-300 pointer-events-none flex items-center gap-3 bg-slate-900 text-white px-5 py-3.5 rounded-xl shadow-2xl border border-slate-700">
+    <i id="admin-toast-icon" class="fa-solid fa-circle-check text-green-400 text-lg"></i>
+    <span id="admin-toast-msg" class="text-sm font-medium">Changes saved successfully!</span>
+  </div>
+
+  <!-- Firebase Cloud Firestore + Analytics Integration -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics-compat.js"></script>
+  <script src="firebase-config.js"></script>
+  <!-- Load CMS Central Logic -->
+  <script src="data.js"></script>
+  <!-- Load Admin Application Logic -->
+  <script src="admin.js"></script>
+</body>
+</html>

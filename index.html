@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title id="cms-browser-title">Pixel Craft — Empowering Brands With Digital Magic</title>
+  
+  <!-- Google Fonts: Plus Jakarta Sans / Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              navy: '#0b132b',
+              dark: '#080d1f',
+              blue: '#2563eb',
+              lightBlue: '#3b82f6',
+              accent: '#1d4ed8'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="font-sans bg-white text-slate-800 antialiased selection:bg-blue-500 selection:text-white">
+
+  <!-- ==================== HEADER & NAVBAR ==================== -->
+  <header class="bg-[#0b132b] text-white sticky top-0 z-50 transition-all duration-300 border-b border-white/5" id="main-header">
+    <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 h-20 flex items-center justify-between">
+      
+      <!-- Brand Logo -->
+      <a href="#home" class="cms-brand-logo flex items-center gap-2.5 text-xl sm:text-2xl font-bold tracking-tight text-white hover:opacity-90 transition">
+        <img id="cms-nav-logo-img" src="" alt="Brand Logo" class="hidden object-contain max-h-10 rounded" />
+        <span id="cms-nav-logo-text" class="cms-brand-text">Pixel Craft</span>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+        <a href="#home" class="nav-link hover:text-white transition duration-200">Home</a>
+        <a href="#about" class="nav-link hover:text-white transition duration-200">About</a>
+        <a href="#services" class="nav-link hover:text-white transition duration-200">Services</a>
+        <a href="#pricing" class="nav-link hover:text-white transition duration-200">Pricing</a>
+        <a href="#contact" class="nav-link hover:text-white transition duration-200">Contact</a>
+      </nav>
+
+      <!-- Right Action CTA -->
+      <div class="hidden md:flex items-center gap-4">
+        <a href="#contact" class="bg-white text-slate-900 text-sm font-semibold px-6 py-2.5 rounded-full hover:bg-slate-100 transition shadow-sm hover:shadow active:scale-95 duration-150">
+          Get Started
+        </a>
+      </div>
+
+      <!-- Mobile Hamburger Button -->
+      <button id="mobile-menu-btn" class="md:hidden text-slate-300 hover:text-white p-2 focus:outline-none" aria-label="Toggle navigation">
+        <i class="fa-solid fa-bars text-xl" id="menu-icon"></i>
+      </button>
+    </div>
+
+    <!-- Mobile Navigation Dropdown -->
+    <div id="mobile-menu" class="hidden md:hidden bg-[#0b132b]/95 backdrop-blur-md border-b border-slate-800 px-6 py-5 space-y-4">
+      <a href="#home" class="block text-slate-200 hover:text-white font-medium py-1">Home</a>
+      <a href="#services" class="block text-slate-200 hover:text-white font-medium py-1">Services</a>
+      <a href="#about" class="block text-slate-200 hover:text-white font-medium py-1">About</a>
+      <a href="#pricing" class="block text-slate-200 hover:text-white font-medium py-1">Pricing</a>
+      <a href="#contact" class="block text-slate-200 hover:text-white font-medium py-1">Contact</a>
+      <div class="pt-2">
+        <a href="#contact" class="block text-center bg-white text-slate-900 font-semibold px-5 py-2.5 rounded-full">
+          Get Started
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ==================== HERO SECTION ==================== -->
+    <section id="home" class="bg-[#0b132b] text-white pt-12 pb-24 md:py-28 relative overflow-hidden">
+      <!-- Subtle ambient glow in background -->
+      <div class="absolute -top-40 -left-40 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute top-1/2 right-0 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+        
+        <!-- Left Hero Content -->
+        <div class="lg:col-span-7 space-y-7 text-left">
+          <h1 id="cms-hero-title" class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.15]">
+            Empowering Brands<br class="hidden sm:inline" />
+            With Digital Magic
+          </h1>
+          <p id="cms-hero-subtitle" class="text-slate-300 text-base sm:text-lg max-w-xl font-normal leading-relaxed">
+            Empowering brands with digital magic is target, and magic in a creative agency or portfolio.
+          </p>
+
+          <!-- CTA Buttons -->
+          <div class="flex flex-wrap items-center gap-4 pt-2">
+            <a href="#contact" id="cms-hero-cta" class="inline-flex items-center justify-center bg-white text-slate-900 font-semibold px-7 py-3 rounded-lg hover:bg-slate-100 transition shadow-lg hover:shadow-xl active:scale-95 duration-150 text-sm sm:text-base">
+              Start a Project
+            </a>
+            <button id="open-video-btn" class="inline-flex items-center justify-center bg-transparent text-white font-medium px-7 py-3 rounded-lg border border-white/50 hover:border-white hover:bg-white/10 transition active:scale-95 duration-150 text-sm sm:text-base gap-2 group">
+              <i class="fa-regular fa-circle-play text-slate-300 group-hover:text-white transition"></i>
+              <span id="cms-hero-video-text">Watch Video</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Right Hero Illustration (Laptop with Code & Floating 3D Gears) -->
+        <div class="lg:col-span-5 flex justify-center lg:justify-end relative">
+          <div class="relative w-full max-w-lg lg:max-w-none">
+            
+            <!-- Laptop SVG Graphic Matching Exact Mockup -->
+            <div class="relative mx-auto flex items-center justify-center py-6">
+              <svg viewBox="0 0 520 400" class="w-full h-auto drop-shadow-2xl select-none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="laptopGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#cbd5e1" />
+                    <stop offset="100%" stop-color="#94a3b8" />
+                  </linearGradient>
+                  <linearGradient id="screenGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#1e293b" />
+                    <stop offset="100%" stop-color="#0f172a" />
+                  </linearGradient>
+                  <!-- Floating Gears Gradients -->
+                  <linearGradient id="gearOrange" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="#fb7185" />
+                    <stop offset="100%" stop-color="#e11d48" />
+                  </linearGradient>
+                  <linearGradient id="gearYellow" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="#fde047" />
+                    <stop offset="100%" stop-color="#eab308" />
+                  </linearGradient>
+                  <linearGradient id="gearBlue" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="#60a5fa" />
+                    <stop offset="100%" stop-color="#2563eb" />
+                  </linearGradient>
+                  
+                  <!-- Filter for soft 3D shadow -->
+                  <filter id="gearShadow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="2" dy="5" stdDeviation="4" flood-opacity="0.35" />
+                  </filter>
+                </defs>
+
+                <!-- Laptop Lid Bezel -->
+                <rect x="70" y="50" width="380" height="250" rx="16" fill="url(#laptopGrad)" stroke="#64748b" stroke-width="2" />
+                <!-- Webcam -->
+                <circle cx="260" cy="58" r="3" fill="#334155" />
+                
+                <!-- Screen Surface -->
+                <rect x="86" y="68" width="348" height="218" rx="8" fill="url(#screenGrad)" />
+
+                <!-- Code Editor Header Bar -->
+                <rect x="86" y="68" width="348" height="24" rx="8" fill="#1e293b" />
+                <circle cx="102" cy="80" r="4" fill="#ef4444" />
+                <circle cx="116" cy="80" r="4" fill="#eab308" />
+                <circle cx="130" cy="80" r="4" fill="#22c55e" />
+                <rect x="150" y="74" width="75" height="12" rx="3" fill="#334155" />
+
+                <!-- Editor Code Lines (Syntax Highlighting) -->
+                <rect x="104" y="104" width="36" height="8" rx="3" fill="#f43f5e" />
+                <rect x="146" y="104" width="60" height="8" rx="3" fill="#38bdf8" />
+                <rect x="212" y="104" width="48" height="8" rx="3" fill="#e2e8f0" />
+                <rect x="120" y="122" width="50" height="8" rx="3" fill="#38bdf8" />
+                <rect x="176" y="122" width="70" height="8" rx="3" fill="#fbbf24" />
+                <rect x="120" y="140" width="80" height="8" rx="3" fill="#a855f7" />
+                <rect x="206" y="140" width="40" height="8" rx="3" fill="#34d399" />
+                <rect x="252" y="140" width="60" height="8" rx="3" fill="#e2e8f0" />
+                <rect x="136" y="158" width="65" height="8" rx="3" fill="#38bdf8" />
+                <rect x="207" y="158" width="50" height="8" rx="3" fill="#fbbf24" />
+                <rect x="136" y="176" width="90" height="8" rx="3" fill="#fb7185" />
+                <rect x="120" y="194" width="44" height="8" rx="3" fill="#a855f7" />
+                <rect x="170" y="194" width="55" height="8" rx="3" fill="#38bdf8" />
+                <rect x="104" y="212" width="30" height="8" rx="3" fill="#f43f5e" />
+                <rect x="104" y="230" width="70" height="8" rx="3" fill="#64748b" opacity="0.6" />
+                <rect x="180" y="230" width="50" height="8" rx="3" fill="#38bdf8" />
+                <rect x="104" y="248" width="45" height="8" rx="3" fill="#34d399" />
+                <rect x="155" y="248" width="85" height="8" rx="3" fill="#e2e8f0" opacity="0.8" />
+
+                <!-- Laptop Base / Keyboard Deck -->
+                <path d="M 40 300 L 480 300 L 460 318 L 60 318 Z" fill="url(#laptopGrad)" stroke="#475569" stroke-width="1.5" />
+                <rect x="225" y="302" width="70" height="4" rx="2" fill="#64748b" />
+                <rect x="35" y="318" width="450" height="6" rx="3" fill="#475569" />
+                <ellipse cx="260" cy="336" rx="220" ry="12" fill="#000000" opacity="0.35" />
+
+                <!-- Floating 3D Gears Group -->
+                <!-- Gear 1: Coral / Pink-Orange (Top Gear) -->
+                <g transform="translate(365, 30)" filter="url(#gearShadow)" class="animate-pulse">
+                  <path d="M0 -30 L5 -30 L7 -22 L16 -25 L20 -20 L16 -12 L24 -7 L26 0 L24 7 L16 12 L20 20 L16 25 L7 22 L5 30 L-5 30 L-7 22 L-16 25 L-20 20 L-16 12 L-24 7 L-26 0 L-24 -7 L-16 -12 L-20 -20 L-16 -25 L-7 -22 Z"
+                        fill="url(#gearOrange)" transform="scale(1.2)" />
+                  <circle cx="0" cy="0" r="10" fill="#0b132b" />
+                </g>
+
+                <!-- Gear 2: Golden Yellow (Middle Gear) -->
+                <g transform="translate(425, 60)" filter="url(#gearShadow)">
+                  <path d="M0 -25 L4 -25 L6 -18 L13 -20 L17 -16 L13 -10 L19 -5 L20 0 L19 5 L13 10 L17 16 L13 20 L6 18 L4 25 L-4 25 L-6 18 L-13 20 L-17 16 L-13 10 L-19 5 L-20 0 L-19 -5 L-13 -10 L-17 -16 L-13 -20 L-6 -18 Z"
+                        fill="url(#gearYellow)" transform="scale(1.35)" />
+                  <circle cx="0" cy="0" r="11" fill="#0b132b" />
+                </g>
+
+                <!-- Gear 3: Vibrant Blue (Lower Right Gear) -->
+                <g transform="translate(440, 125)" filter="url(#gearShadow)">
+                  <path d="M0 -22 L4 -22 L5 -16 L12 -18 L15 -14 L12 -9 L17 -4 L18 0 L17 4 L12 9 L15 14 L12 18 L5 16 L4 22 L-4 22 L-5 16 L-12 18 L-15 14 L-12 9 L-17 4 L-18 0 L-17 -4 L-12 -9 L-15 -14 L-12 -18 L-5 -16 Z"
+                        fill="url(#gearBlue)" transform="scale(1.1)" />
+                  <circle cx="0" cy="0" r="8" fill="#0b132b" />
+                </g>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== WHAT WE DO SECTION ==================== -->
+    <section id="services" class="py-24 bg-white relative">
+      <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 text-center">
+        
+        <!-- Section Heading -->
+        <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 mb-16">
+          What We Do
+        </h2>
+
+        <!-- Services Cards Grid (Populated dynamically by CMS) -->
+        <div id="cms-services-container" class="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-10">
+          
+          <!-- Card 1: Web Development -->
+          <div class="service-card group bg-white border border-slate-100 rounded-2xl p-8 sm:p-10 text-center shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_30px_rgba(0,0,0,0.08)] transition-all duration-300 hover:-translate-y-1">
+            <div class="w-16 h-16 mx-auto mb-6 flex items-center justify-center rounded-xl border border-blue-200 bg-blue-50/50 text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition duration-300">
+              <i class="fa-solid fa-code text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 mb-3">
+              Web Development
+            </h3>
+            <p class="text-slate-500 text-sm leading-relaxed max-w-xs mx-auto">
+              Nec sed condimentum, web development convallis feugiat description.
+            </p>
+          </div>
+
+          <!-- Card 2: UI/UX Design -->
+          <div class="service-card group bg-white border border-slate-100 rounded-2xl p-8 sm:p-10 text-center shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_30px_rgba(0,0,0,0.08)] transition-all duration-300 hover:-translate-y-1">
+            <div class="w-16 h-16 mx-auto mb-6 flex items-center justify-center rounded-xl border border-blue-200 bg-blue-50/50 text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition duration-300">
+              <i class="fa-solid fa-layer-group text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 mb-3">
+              UI/UX Design
+            </h3>
+            <p class="text-slate-500 text-sm leading-relaxed max-w-xs mx-auto">
+              Design are-web-motivation, design, meditation 2-2-3 design.
+            </p>
+          </div>
+
+          <!-- Card 3: Digital Marketing -->
+          <div class="service-card group bg-white border border-slate-100 rounded-2xl p-8 sm:p-10 text-center shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_30px_rgba(0,0,0,0.08)] transition-all duration-300 hover:-translate-y-1">
+            <div class="w-16 h-16 mx-auto mb-6 flex items-center justify-center rounded-xl border border-blue-200 bg-blue-50/50 text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition duration-300">
+              <i class="fa-solid fa-bullhorn text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 mb-3">
+              Digital Marketing
+            </h3>
+            <p class="text-slate-500 text-sm leading-relaxed max-w-xs mx-auto">
+              Digital marketing marketing making relevant versimaltes and consideration.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== ABOUT US SECTION ==================== -->
+    <section id="about" class="py-20 bg-slate-50/60 relative border-t border-b border-slate-100">
+      <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        
+        <!-- Left Team Photo Column -->
+        <div class="lg:col-span-6">
+          <div class="relative overflow-hidden rounded-2xl shadow-xl border border-slate-200/80 bg-white group">
+            <img 
+              id="cms-about-image"
+              src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80" 
+              alt="Pixel Craft Team Collaborating" 
+              class="w-full h-80 sm:h-96 object-cover object-center group-hover:scale-105 transition-transform duration-500"
+              loading="lazy"
+              onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'w-full h-80 sm:h-96 bg-slate-200 flex flex-col items-center justify-center text-slate-500 gap-2\'><i class=\'fa-solid fa-users text-4xl\'></i><span class=\'text-sm font-medium\'>Pixel Craft Team</span></div>';"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/20 via-transparent to-transparent"></div>
+          </div>
+        </div>
+
+        <!-- Right Content Column -->
+        <div class="lg:col-span-6 space-y-7">
+          <h2 id="cms-about-title" class="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900">
+            About Us
+          </h2>
+
+          <!-- Feature Bullets (Populated dynamically by CMS) -->
+          <div id="cms-about-features" class="space-y-6 pt-2">
+            
+            <!-- Item 1 -->
+            <div class="flex items-start gap-4">
+              <div class="flex-shrink-0 mt-1">
+                <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-blue-600 text-white text-xs shadow-sm">
+                  <i class="fa-solid fa-check"></i>
+                </span>
+              </div>
+              <div>
+                <h3 class="text-base font-bold text-slate-900">Responsive Design</h3>
+                <p class="text-sm text-slate-500 mt-0.5">Responsive design, alat, and attentiont</p>
+              </div>
+            </div>
+
+            <!-- Item 2 -->
+            <div class="flex items-start gap-4">
+              <div class="flex-shrink-0 mt-1">
+                <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-blue-600 text-white text-xs shadow-sm">
+                  <i class="fa-solid fa-check"></i>
+                </span>
+              </div>
+              <div>
+                <h3 class="text-base font-bold text-slate-900">Modern Tech Stack</h3>
+                <p class="text-sm text-slate-500 mt-0.5">Modern com ceremen the solutions</p>
+              </div>
+            </div>
+
+            <!-- Item 3 -->
+            <div class="flex items-start gap-4">
+              <div class="flex-shrink-0 mt-1">
+                <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-blue-600 text-white text-xs shadow-sm">
+                  <i class="fa-solid fa-check"></i>
+                </span>
+              </div>
+              <div>
+                <h3 class="text-base font-bold text-slate-900">24/7 Support</h3>
+                <p class="text-sm text-slate-500 mt-0.5">Round-the-clock technical guidance and assistance</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== SIMPLE & FAIR PRICING ==================== -->
+    <section id="pricing" class="py-24 bg-white relative">
+      <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 text-center">
+        
+        <!-- Section Heading -->
+        <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 mb-16">
+          Simple &amp; Fair Pricing
+        </h2>
+
+        <!-- Pricing Cards Grid (Populated dynamically by CMS) -->
+        <div id="cms-pricing-container" class="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-8 max-w-5xl mx-auto items-stretch">
+          <!-- Dynamically populated via script.js & data.js -->
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== GET IN TOUCH SECTION ==================== -->
+    <section id="contact" class="py-24 bg-white relative border-t border-slate-100">
+      <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+        
+        <!-- Section Heading -->
+        <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 mb-12 text-left">
+          Get In Touch
+        </h2>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+          
+          <!-- Contact Form (Left) -->
+          <div class="lg:col-span-7">
+            <form id="contact-form" class="space-y-4" onsubmit="handleContactSubmit(event)">
+              <div>
+                <input 
+                  type="text" 
+                  id="user-name" 
+                  name="name" 
+                  required 
+                  placeholder="Name" 
+                  class="w-full px-4 py-3 rounded-lg border border-slate-200 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition text-sm"
+                />
+              </div>
+
+              <div>
+                <input 
+                  type="email" 
+                  id="user-email" 
+                  name="email" 
+                  required 
+                  placeholder="Email" 
+                  class="w-full px-4 py-3 rounded-lg border border-slate-200 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition text-sm"
+                />
+              </div>
+
+              <div>
+                <textarea 
+                  id="user-message" 
+                  name="message" 
+                  rows="4" 
+                  required 
+                  placeholder="Message" 
+                  class="w-full px-4 py-3 rounded-lg border border-slate-200 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition text-sm resize-none"
+                ></textarea>
+              </div>
+
+              <div>
+                <button 
+                  type="submit" 
+                  id="submit-btn"
+                  class="w-full sm:w-auto min-w-[140px] bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-8 rounded-lg transition active:scale-95 duration-150 shadow-sm"
+                >
+                  Submit
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Contact Details (Right) -->
+          <div class="lg:col-span-5 space-y-6 pt-2">
+            
+            <!-- Phone -->
+            <div class="flex items-start gap-4">
+              <div class="text-slate-800 mt-1">
+                <i class="fa-solid fa-phone text-lg"></i>
+              </div>
+              <div>
+                <div class="text-sm font-bold text-slate-900">Phone</div>
+                <div class="text-sm text-slate-600 mt-0.5">
+                  <a href="tel:0152327880" id="cms-contact-phone" class="hover:text-blue-600 transition">(015) 232-7880</a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Email -->
+            <div class="flex items-start gap-4">
+              <div class="text-slate-800 mt-1">
+                <i class="fa-regular fa-envelope text-lg"></i>
+              </div>
+              <div>
+                <div class="text-sm font-bold text-slate-900">Email</div>
+                <div class="text-sm text-slate-600 mt-0.5">
+                  <a href="mailto:email@pixelcraft.com" id="cms-contact-email" class="hover:text-blue-600 transition">email@pixelcraft.com</a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Address -->
+            <div class="flex items-start gap-4">
+              <div class="text-slate-800 mt-1">
+                <i class="fa-solid fa-location-dot text-lg"></i>
+              </div>
+              <div>
+                <div class="text-sm font-bold text-slate-900">Address</div>
+                <div id="cms-contact-address" class="text-sm text-slate-600 mt-0.5 leading-relaxed">
+                  222 H. Address Street,<br />Hank, 38003
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="bg-[#0b132b] text-white py-12 border-t border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 flex flex-col md:flex-row items-center justify-between gap-6">
+      
+      <!-- Left Copyright & Brand -->
+      <div class="space-y-1 text-center md:text-left">
+        <div id="cms-footer-brand" class="cms-brand-logo flex items-center justify-center md:justify-start gap-2.5 text-xl font-bold tracking-tight text-white">
+          <img id="cms-footer-logo-img" src="" alt="Brand Logo" class="hidden object-contain max-h-8 rounded" />
+          <span id="cms-footer-logo-text" class="cms-brand-text">Pixel Craft</span>
+        </div>
+        <p id="cms-footer-copyright" class="text-xs sm:text-sm text-slate-400">
+          Copyright Pixel Craft. All rights reserved.
+        </p>
+      </div>
+
+      <!-- Right Social Media Icons -->
+      <div class="flex items-center gap-5 text-slate-400">
+        <a id="cms-social-instagram" href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="hover:text-white transition duration-200" aria-label="Instagram">
+          <i class="fa-brands fa-instagram text-xl"></i>
+        </a>
+        <a id="cms-social-twitter" href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="hover:text-white transition duration-200" aria-label="Twitter">
+          <i class="fa-brands fa-x-twitter text-xl"></i>
+        </a>
+        <a id="cms-social-facebook" href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="hover:text-white transition duration-200" aria-label="Facebook">
+          <i class="fa-brands fa-facebook-f text-xl"></i>
+        </a>
+        <a id="cms-social-youtube" href="https://youtube.com" target="_blank" rel="noopener noreferrer" class="hover:text-white transition duration-200" aria-label="YouTube">
+          <i class="fa-brands fa-youtube text-xl"></i>
+        </a>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ==================== INTERACTIVE VIDEO MODAL ==================== -->
+  <div id="video-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="relative bg-slate-900 rounded-2xl max-w-3xl w-full p-2 overflow-hidden shadow-2xl border border-slate-700">
+      <button id="close-video-btn" class="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-slate-800 text-white flex items-center justify-center hover:bg-slate-700 transition" aria-label="Close modal">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <div class="relative pt-[56.25%] w-full bg-black rounded-xl overflow-hidden">
+        <iframe 
+          id="video-frame"
+          class="absolute inset-0 w-full h-full"
+          src="" 
+          title="Pixel Craft Showcase Video" 
+          frameborder="0" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+          allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== ORDER CHECKOUT & CONFIRMATION MODAL ==================== -->
+  <div id="order-modal" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="relative bg-white rounded-2xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-slate-100 max-h-[92vh] overflow-y-auto">
+      
+      <!-- Close Button -->
+      <button onclick="closeOrderModal()" class="absolute top-5 right-5 z-10 w-9 h-9 rounded-full bg-slate-100 text-slate-500 hover:text-slate-800 hover:bg-slate-200 flex items-center justify-center transition" aria-label="Close modal">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <!-- VIEW 1: ORDER ENTRY FORM -->
+      <div id="order-form-view" class="space-y-6">
+        <div>
+          <span class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2.5 py-1 rounded-full border border-blue-100">
+            <i class="fa-solid fa-shield-halved text-[11px]"></i>
+            <span>Secure Order Activation</span>
+          </span>
+          <h3 class="text-2xl font-extrabold text-slate-900 tracking-tight mt-2.5">
+            Complete Your Order
+          </h3>
+          <p class="text-slate-500 text-xs sm:text-sm mt-1">
+            Review your plan summary and enter your contact details to activate.
+          </p>
+        </div>
+
+        <!-- Plan Summary Banner -->
+        <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200/80 flex items-center justify-between">
+          <div>
+            <div class="text-xs uppercase tracking-wider text-slate-400 font-bold">Selected Plan</div>
+            <div id="order-modal-plan-name" class="text-lg font-extrabold text-slate-900 mt-0.5">Pro</div>
+            <div id="order-modal-plan-features" class="text-xs text-slate-500 mt-1 flex flex-wrap gap-x-3 gap-y-1">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+          <div class="text-right">
+            <div id="order-modal-plan-price" class="text-2xl font-black text-blue-600">$79<span class="text-xs font-semibold text-slate-500">/mo</span></div>
+            <span class="text-[11px] text-emerald-600 font-semibold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/60">Best Value</span>
+          </div>
+        </div>
+
+        <!-- Order Form -->
+        <form id="order-form" onsubmit="handleOrderSubmit(event)" class="space-y-4">
+          <input type="hidden" id="order-input-plan-id" />
+          <input type="hidden" id="order-input-plan-name" />
+          <input type="hidden" id="order-input-plan-price" />
+          <input type="hidden" id="order-input-plan-period" />
+
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+              Full Name <span class="text-red-500">*</span>
+            </label>
+            <input 
+              type="text" 
+              id="order-customer-name" 
+              required 
+              placeholder="e.g. Sarah Miller" 
+              class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" 
+            />
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                Work Email <span class="text-red-500">*</span>
+              </label>
+              <input 
+                type="email" 
+                id="order-customer-email" 
+                required 
+                placeholder="name@company.com" 
+                class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" 
+              />
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                Phone Number <span id="order-phone-req" class="text-red-500">*</span>
+              </label>
+              <input 
+                type="tel" 
+                id="order-customer-phone" 
+                placeholder="+1 (555) 000-0000" 
+                class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" 
+              />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                Company / Brand
+              </label>
+              <input 
+                type="text" 
+                id="order-customer-company" 
+                placeholder="e.g. Acme Studio" 
+                class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" 
+              />
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                Payment Preference
+              </label>
+              <select 
+                id="order-payment-method" 
+                class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+              >
+                <option value="Credit Card / Stripe">Credit Card (Stripe)</option>
+                <option value="Direct Invoice / Net 15">Company Invoice (Net 15)</option>
+                <option value="Bank Wire / Transfer">Bank Wire Transfer</option>
+                <option value="PayPal / Online">PayPal / Digital Wallet</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+              Project Notes or Special Requirements
+            </label>
+            <textarea 
+              id="order-notes" 
+              rows="2" 
+              placeholder="Tell us any specific features or goals you have in mind..." 
+              class="w-full px-4 py-2 rounded-xl border border-slate-200 text-slate-900 text-xs placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none transition"
+            ></textarea>
+          </div>
+
+          <div class="pt-2 flex items-center justify-between gap-3">
+            <button 
+              type="button" 
+              onclick="closeOrderModal()" 
+              class="w-1/3 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs sm:text-sm font-semibold py-3 px-4 rounded-xl transition"
+            >
+              Cancel
+            </button>
+            <button 
+              type="submit" 
+              id="order-submit-btn" 
+              class="w-2/3 bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm font-semibold py-3 px-5 rounded-xl shadow-lg shadow-blue-600/30 transition active:scale-95 flex items-center justify-center gap-2"
+            >
+              <i class="fa-solid fa-lock text-xs"></i>
+              <span>Confirm &amp; Place Order</span>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- VIEW 2: ORDER CONFIRMATION / SUCCESS STATE -->
+      <div id="order-success-view" class="hidden text-center space-y-5 py-4">
+        <!-- Animated Badge -->
+        <div class="w-16 h-16 mx-auto rounded-full bg-emerald-50 text-emerald-500 flex items-center justify-center text-3xl border-2 border-emerald-200 shadow-inner">
+          <i class="fa-solid fa-check"></i>
+        </div>
+
+        <div>
+          <span class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
+            <i class="fa-solid fa-circle-check text-[11px]"></i>
+            <span>Order Confirmed</span>
+          </span>
+          <h3 id="order-success-title" class="text-2xl font-extrabold text-slate-900 tracking-tight mt-2.5">
+            Order Confirmed! Thank You
+          </h3>
+          <p id="order-success-message" class="text-slate-600 text-xs sm:text-sm mt-2 max-w-md mx-auto leading-relaxed">
+            Your order has been received successfully. Our onboarding team will contact you shortly.
+          </p>
+        </div>
+
+        <!-- Order Receipt Card -->
+        <div class="p-5 bg-slate-50 rounded-2xl border border-slate-200/80 text-left space-y-3 text-xs">
+          <div class="flex items-center justify-between pb-2.5 border-b border-slate-200">
+            <span class="text-slate-400 font-semibold uppercase tracking-wider">Order Reference</span>
+            <span id="order-success-id" class="font-mono font-bold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-md border border-blue-200">#ORD-00000</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-slate-500">Plan Selected:</span>
+            <span id="order-success-plan" class="font-bold text-slate-900">Pro Plan</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-slate-500">Total Amount:</span>
+            <span id="order-success-price" class="font-extrabold text-slate-900 text-sm">$79/mo</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-slate-500">Customer Email:</span>
+            <span id="order-success-email" class="font-semibold text-slate-700">user@example.com</span>
+          </div>
+          <div class="flex items-center justify-between pt-1 border-t border-slate-200/60 text-[11px] text-slate-400">
+            <span>Status:</span>
+            <span class="text-emerald-600 font-bold flex items-center gap-1"><i class="fa-solid fa-circle text-[8px]"></i> Confirmed in System</span>
+          </div>
+        </div>
+
+        <!-- WhatsApp Support Action -->
+        <div id="order-success-whatsapp-container" class="pt-1">
+          <a 
+            id="order-success-whatsapp-btn" 
+            href="#" 
+            target="_blank" 
+            class="w-full inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs sm:text-sm py-3 px-5 rounded-xl shadow-lg shadow-emerald-600/30 transition active:scale-95"
+          >
+            <i class="fa-brands fa-whatsapp text-base"></i>
+            <span>Confirm Faster via WhatsApp</span>
+          </a>
+        </div>
+
+        <!-- Done Close Button -->
+        <button 
+          onclick="closeOrderModal()" 
+          class="w-full bg-slate-900 hover:bg-black text-white text-xs sm:text-sm font-semibold py-3 px-5 rounded-xl transition"
+        >
+          Done &amp; Close
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== TOAST NOTIFICATION ==================== -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none flex items-center gap-3 bg-slate-900 text-white px-5 py-3.5 rounded-xl shadow-2xl border border-slate-700">
+    <i class="fa-solid fa-circle-check text-green-400 text-lg"></i>
+    <span id="toast-message" class="text-sm font-medium">Action successful!</span>
+  </div>
+
+  <!-- Firebase Cloud Firestore + Analytics Integration -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics-compat.js"></script>
+  <script src="firebase-config.js"></script>
+  <!-- Central Data & Admin Functions -->
+  <script src="data.js"></script>
+  <!-- Main Frontend Interactions -->
+  <script src="script.js"></script>
+</body>
+</html>
